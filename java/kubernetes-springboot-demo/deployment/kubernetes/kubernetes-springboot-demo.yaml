@@ -1,0 +1,58 @@
+apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubernetes-springboot-demo-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: \"false\"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kubernetes-springboot-demo-service
+          servicePort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubernetes-springboot-demo-service
+  labels:
+    app: kubernetes-springboot-demo
+    version : v1
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: kubernetes-springboot-demo
+    version : v1
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubernetes-springboot-demo-deployment
+  labels:
+    app: kubernetes-springboot-demo
+    version : v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubernetes-springboot-demo
+      version: v1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: kubernetes-springboot-demo
+        version : v1
+    spec:
+      containers:
+      - image: sinhasonalkumar/kubernetes-springboot-demo:1
+        name: kubernetes-demo
