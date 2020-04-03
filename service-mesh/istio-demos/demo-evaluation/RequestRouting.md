@@ -3,6 +3,7 @@
 ## Apply Default Destination Rules.
 
 ```kubectl apply -f samples/bookinfo/networking/destination-rule-all.yaml```
+
 ```kubectl apply -f samples/bookinfo/networking/destination-rule-all-mtls.yaml```
 
 
@@ -11,6 +12,7 @@
 ```kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml```
 
 ```kubectl get virtualservices -o yaml```
+
 ```kubectl get destinationrules -o yaml```
 
  Notice that the reviews part of the page displays with no rating stars, no matter how many times you refresh. This is because you configured Istio to route all traffic for the reviews service to the version reviews:v1 and this version of the service does not access the star ratings service.
