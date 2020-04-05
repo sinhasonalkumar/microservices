@@ -7,13 +7,17 @@ import java.util.stream.Collectors;
 import org.axonframework.config.EventProcessingConfiguration;
 import org.axonframework.eventhandling.TrackingEventProcessor;
 import org.axonframework.eventsourcing.eventstore.EventStore;
+import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
+import org.axonframework.queryhandling.SubscriptionQueryBackpressure;
+import org.axonframework.queryhandling.SubscriptionQueryResult;
 import org.springframework.stereotype.Service;
 
 import com.demo.perf.entities.CapabilityQueryEntity;
 import com.demo.perf.query.capability.FindCapabilityByIdQuery;
 
 import lombok.AllArgsConstructor;
+import reactor.core.publisher.Flux;
 
 @Service
 @AllArgsConstructor
@@ -33,6 +37,17 @@ public class CapabilityQueryServiceImpl implements CapabilityQueryService {
 	@Override
 	public CompletableFuture<CapabilityQueryEntity> getCapability(String capabilityId) {
 		return queryGateway.query(new FindCapabilityByIdQuery(capabilityId), CapabilityQueryEntity.class);
+	}
+	
+	@Override
+	public Flux<CapabilityQueryEntity> listAllCapabilities() {
+		 SubscriptionQueryResult<List<CapabilityQueryEntity>, CapabilityQueryEntity> response = queryGateway.subscriptionQuery("listAllCapability",null,
+												ResponseTypes.multipleInstancesOf(CapabilityQueryEntity.class),
+												ResponseTypes.instanceOf(CapabilityQueryEntity.class),
+											    SubscriptionQueryBackpressure.defaultBackpressure());
+		 return response.initialResult()
+				 		.flatMapMany(Flux::fromIterable)
+				 		.concatWith(response.updates());
 	}
 
 	@Override

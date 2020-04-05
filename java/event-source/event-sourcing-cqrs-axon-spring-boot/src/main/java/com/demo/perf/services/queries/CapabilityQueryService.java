@@ -6,8 +6,11 @@ import java.util.concurrent.CompletableFuture;
 
 import com.demo.perf.entities.CapabilityQueryEntity;
 
+import reactor.core.publisher.Flux;
+
 public interface CapabilityQueryService {
-    List<Object> listEventsForCapability(String capabilityId);
+	Flux<CapabilityQueryEntity> listAllCapabilities();
+	List<Object> listEventsForCapability(String capabilityId);
     CompletableFuture<CapabilityQueryEntity> getCapability(String capabilityId);
 	void replayEvents(String name);
 }

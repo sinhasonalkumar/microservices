@@ -19,4 +19,9 @@ public class CapabilityQueryHandler {
 	public CapabilityQueryEntity getCapability(FindCapabilityByIdQuery findCapabilityByIdQuery) {
 		return capabilityRepository.findById(findCapabilityByIdQuery.capabilityId).get();
 	}
+	
+	@QueryHandler(queryName = "listAllCapability")
+    public Iterable<CapabilityQueryEntity> listAllCapability() {
+        return capabilityRepository.findAll();
+    }
 }
