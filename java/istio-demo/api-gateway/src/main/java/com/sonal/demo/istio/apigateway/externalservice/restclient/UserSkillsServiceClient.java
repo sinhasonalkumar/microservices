@@ -1,5 +1,6 @@
 package com.sonal.demo.istio.apigateway.externalservice.restclient;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -11,7 +12,8 @@ import reactor.core.publisher.Mono;
 @Service
 public class UserSkillsServiceClient {
 	
-	private String userSkillsServiceBaseURL = "http://localhost:8082/";
+	@Value("${rest.client.baseurl.userProfileService}")
+	private String userSkillsServiceBaseURL;
 	
 	public Mono<UserSkillsDetailsResponse> getUserSkillsDetails(String userId) {
 		

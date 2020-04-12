@@ -1,10 +1,10 @@
 package com.sonal.demo.istio.capabilityservice.externalservices.restclient;
 
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,7 +18,8 @@ import reactor.core.publisher.Mono;
 @Service
 public class DiscoverSkillsServiceClient {
 	
-	private String skillsDiscoveryServiceBaseURL = "http://localhost:8085";
+	@Value("${rest.client.baseurl.skillsDiscoveryService}")
+	private String skillsDiscoveryServiceBaseURL ;
 	
 	public Mono<List<Capability>> discover() {
 		
