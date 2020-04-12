@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserSkillsDetailsResponseDTO implements Serializable {
+public class UserSkillsDetailsResponse implements Serializable {
 
 	/**
 	 * 
