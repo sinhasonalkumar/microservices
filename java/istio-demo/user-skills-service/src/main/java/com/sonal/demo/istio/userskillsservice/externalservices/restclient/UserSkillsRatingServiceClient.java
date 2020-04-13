@@ -20,11 +20,11 @@ public class UserSkillsRatingServiceClient {
 	public Mono<List<SkillsRating>> getUserSkillsRatings(String userId) {
 		return WebClient.builder()
 						.baseUrl(userSkillsRatingsServiceBaseURL)
-						.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+						//.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 						.build()
 						.get()
 						.uri("/usersSkillsRatings/ratings/{userId}",userId)
-						.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
+						//.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
 						.exchange()
 						.flatMap(r -> r.bodyToMono(UserSkillsRatings.class))
 						.map(usr -> usr.getSkillsRatings());

@@ -22,11 +22,11 @@ public class CapabilityServiceClient {
 	public Mono<List<Capability>> getAllCapabilities() {
 		return WebClient.builder()
 				 .baseUrl(capabilityServiceClientBaseURL)
-				 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				 //.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				 .build()
 				 .get()
 				 .uri("/capabilityService/list")
-				 .accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
+				 //.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
 				 .exchange()
 				 .flatMap(r -> r.bodyToMono(CapabilityResponse.class))
 				 .map(cr -> cr.getCapabilities());

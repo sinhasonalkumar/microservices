@@ -20,11 +20,11 @@ public class UserSkillsServiceClient {
 		
 		return WebClient.builder()
 						.baseUrl(userSkillsServiceBaseURL)
-						.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+						//.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 						.build()
 						.get()
 						.uri("/usersSkills/details/{userId}", userId)
-						.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
+						//.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
 						.exchange()
 						.flatMap(r -> r.bodyToMono(UserSkillsDetailsResponse.class));
 	}

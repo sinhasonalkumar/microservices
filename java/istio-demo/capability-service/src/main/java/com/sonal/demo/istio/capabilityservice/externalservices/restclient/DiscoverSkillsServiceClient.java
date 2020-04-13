@@ -27,11 +27,11 @@ public class DiscoverSkillsServiceClient {
 		
 		return  WebClient.builder()
 				   .baseUrl(skillsDiscoveryServiceBaseURL)
-				   .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				   //.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				   .build()
 				   .get()
 				   .uri("/discoverSkills/discover")
-				   .accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
+				   //.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
 				   .exchange()
 				   .flatMap(r -> r.bodyToMono(SkillsDiscoveredDTO.class))
 				   .map(ds -> ds.getSkillsDiscovered())
