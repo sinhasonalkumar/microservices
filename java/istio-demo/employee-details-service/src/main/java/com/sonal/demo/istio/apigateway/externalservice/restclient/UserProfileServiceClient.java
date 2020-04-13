@@ -20,11 +20,11 @@ public class UserProfileServiceClient {
 	public Mono<UserProfileResponse> getUserProfile(String userId) {
 		return WebClient.builder()
 						.baseUrl(userProfileServiceBaseURL)
-						//.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+						.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 						.build()
 						.get()
 						.uri("/userProfile/{userId}", userId)
-						//.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
+						.accept(MediaType.APPLICATION_JSON)
 						.exchange()
 						.flatMap(r -> r.bodyToMono(UserProfileResponse.class));
 	}
@@ -32,11 +32,11 @@ public class UserProfileServiceClient {
 	public Mono<UsersProfilesResponse> getUsersProfiles() {
 		return WebClient.builder()
 						.baseUrl(userProfileServiceBaseURL)
-						//.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+						.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 						.build()
 						.get()
 						.uri("/userProfile/showAll")
-						//.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
+						.accept(MediaType.APPLICATION_JSON)
 						.exchange()
 						.flatMap(r -> r.bodyToMono(UsersProfilesResponse.class));
 	}

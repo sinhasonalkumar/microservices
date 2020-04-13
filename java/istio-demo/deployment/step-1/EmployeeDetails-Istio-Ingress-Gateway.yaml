@@ -25,10 +25,6 @@ spec:
   http:
   - match:
     - uri:
-        exact: /userDetails
-    - uri:
-        exact: /actuator
-    - uri:
         prefix: /api
     route:
     - destination:
