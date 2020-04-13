@@ -1,0 +1,308 @@
+##################################################################################################
+# discover-skills-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: discover-skills-service
+  labels:
+    app: discover-skills
+    service: discover-skills
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: discover-skills
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: discover-skills-service-account
+  labels:
+    account: discover-skills
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discover-skills-v1
+  labels:
+    app: discover-skills
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discover-skills
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: discover-skills
+        version: v1
+    spec:
+      serviceAccountName: discover-skills-service-account
+      containers:
+        - name: discover-skills
+          image: docker.io/sixeyed/bookinfo-details:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+##################################################################################################
+# capability-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: capability-service
+  labels:
+    app: capability
+    service: capability
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: capability
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: capability-service-account
+  labels:
+    account: capability
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capability-v1
+  labels:
+    app: capability
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: capability
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: capability
+        version: v1
+    spec:
+      serviceAccountName: capability-service-account
+      containers:
+        - name: capability
+          image: docker.io/istio/examples-bookinfo-ratings-v1:1.15.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9080
+---
+##################################################################################################
+# user-skills-ratings-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-skills-ratings-service
+  labels:
+    app: user-skills-ratings
+    service: user-skills-ratings
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: user-skills-ratings
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: user-skills-ratings-service-account
+  labels:
+    account: user-skills-ratings
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-skills-ratings-v1
+  labels:
+    app: user-skills-ratings
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-skills-ratings
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: user-skills-ratings
+        version: v1
+    spec:
+      serviceAccountName: user-skills-ratings-service
+      containers:
+        - name: user-skills-ratings
+          image: docker.io/istio/examples-bookinfo-reviews-v1:1.15.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+##################################################################################################
+# user-skills-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-skills-service
+  labels:
+    app: user-skills
+    service: user-skills
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: user-skills
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: user-skills-service-account
+  labels:
+    account: user-skills
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-skills-v1
+  labels:
+    app: user-skills
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-skills
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: user-skills
+        version: v1
+    spec:
+      serviceAccountName: user-skills-service-account
+      containers:
+        - name: user-skills
+          image: docker.io/sixeyed/bookinfo-productpage:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+
+##################################################################################################
+# user-profile-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-profile-service
+  labels:
+    app: user-profile
+    service: user-profile
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: user-profile
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: user-profile-service-account
+  labels:
+    account: user-profile
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-profile-v1
+  labels:
+    app: user-profile
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-profile
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: user-profile
+        version: v1
+    spec:
+      serviceAccountName: user-profile-service-account
+      containers:
+        - name: user-profile
+          image: docker.io/sixeyed/bookinfo-productpage:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+
+##################################################################################################
+# employeeDetails-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: employeeDetails-service
+  labels:
+    app: employeeDetails
+    service: employeeDetails
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: employeeDetails
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: employeeDetails-service-account
+  labels:
+    account: employeeDetails
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employeeDetails-v1
+  labels:
+    app: employeeDetails
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: employeeDetails
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: employeeDetails
+        version: v1
+    spec:
+      serviceAccountName: employeeDetails-service-account
+      containers:
+        - name: employeeDetails
+          image: docker.io/sixeyed/bookinfo-productpage:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---

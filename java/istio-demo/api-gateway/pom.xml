@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sonal.demo.istio</groupId>
-	<artifactId>api-gateway</artifactId>
+	<artifactId>employeeDetails-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api-gateway</name>
-	<description>pi-gateway project for Spring Boot Istio Demo</description>
+	<description>employeeDetails-service project for Spring Boot Istio Demo</description>
 
 	<properties>
 		<java.version>14</java.version>

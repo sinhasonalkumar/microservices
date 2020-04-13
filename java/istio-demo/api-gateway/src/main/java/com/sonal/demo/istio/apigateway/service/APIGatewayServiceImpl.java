@@ -10,7 +10,7 @@ import com.sonal.demo.istio.apigateway.externalservice.restclient.UserSkillsServ
 import com.sonal.demo.istio.apigateway.externalservice.restclient.dto.Capability;
 import com.sonal.demo.istio.apigateway.externalservice.restclient.dto.UserProfileResponse;
 import com.sonal.demo.istio.apigateway.externalservice.restclient.dto.UserSkillsDetailsResponse;
-import com.sonal.demo.istio.apigateway.service.vo.UserDetails;
+import com.sonal.demo.istio.apigateway.service.vo.EmployeeDetails;
 
 import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
@@ -27,7 +27,7 @@ public class APIGatewayServiceImpl implements APIGatewayService {
 	
 	
 	@Override
-	public Mono<UserDetails> getUserDetails(String userId) {
+	public Mono<EmployeeDetails> getUserDetails(String userId) {
 		
 		Mono<List<Capability>> allCapabilities = capabilityServiceClient.getAllCapabilities();
 		
@@ -40,10 +40,10 @@ public class APIGatewayServiceImpl implements APIGatewayService {
 		
 	}
 	
-	private UserDetails buildUserDetails(List<Capability> capabilitiesBank, UserProfileResponse userProfileResponse, UserSkillsDetailsResponse userSkillsDetailsResponse ) {
+	private EmployeeDetails buildUserDetails(List<Capability> capabilitiesBank, UserProfileResponse userProfileResponse, UserSkillsDetailsResponse userSkillsDetailsResponse ) {
 		
 		
-		UserDetails userDetails = new UserDetails();
+		EmployeeDetails userDetails = new EmployeeDetails();
 		
 		userDetails.setUserId(userProfileResponse.getUserId());
 		userDetails.setFName(userProfileResponse.getFirstName());
