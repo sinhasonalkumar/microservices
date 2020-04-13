@@ -1,6 +1,7 @@
 package com.sonal.demo.istio.apigateway.externalservice.restclient;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -19,6 +20,7 @@ public class UserSkillsServiceClient {
 		
 		return WebClient.builder()
 						.baseUrl(userSkillsServiceBaseURL)
+						.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 						.build()
 						.get()
 						.uri("/usersSkills/details/{userId}", userId)

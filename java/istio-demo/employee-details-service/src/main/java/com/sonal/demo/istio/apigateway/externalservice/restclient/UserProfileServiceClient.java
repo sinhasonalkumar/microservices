@@ -1,6 +1,7 @@
 package com.sonal.demo.istio.apigateway.externalservice.restclient;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -19,6 +20,7 @@ public class UserProfileServiceClient {
 	public Mono<UserProfileResponse> getUserProfile(String userId) {
 		return WebClient.builder()
 						.baseUrl(userProfileServiceBaseURL)
+						.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 						.build()
 						.get()
 						.uri("/userProfile/{userId}", userId)
@@ -30,6 +32,7 @@ public class UserProfileServiceClient {
 	public Mono<UsersProfilesResponse> getUsersProfiles() {
 		return WebClient.builder()
 						.baseUrl(userProfileServiceBaseURL)
+						.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 						.build()
 						.get()
 						.uri("/userProfile/showAll")

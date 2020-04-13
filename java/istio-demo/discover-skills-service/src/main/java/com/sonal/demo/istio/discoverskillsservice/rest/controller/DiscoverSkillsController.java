@@ -19,7 +19,7 @@ public class DiscoverSkillsController {
 	
 	private SkillsDiscoverer skillsDiscoverer;
 	
-	@GetMapping(value = "discover", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "discover", produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Mono<SkillsDiscoveredDTO> discoverSkills() {
 		return skillsDiscoverer.discover()
 							   .map(SkillsDiscoveredDTO :: new);

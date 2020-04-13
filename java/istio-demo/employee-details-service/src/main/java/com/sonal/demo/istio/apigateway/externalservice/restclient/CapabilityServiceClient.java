@@ -3,6 +3,7 @@ package com.sonal.demo.istio.apigateway.externalservice.restclient;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -21,6 +22,7 @@ public class CapabilityServiceClient {
 	public Mono<List<Capability>> getAllCapabilities() {
 		return WebClient.builder()
 				 .baseUrl(capabilityServiceClientBaseURL)
+				 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				 .build()
 				 .get()
 				 .uri("/capabilityService/list")

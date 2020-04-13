@@ -18,7 +18,7 @@ public class CapabilityServiceController {
 	
 	private CapabilityService capabilityService;
 	
-	@GetMapping(value = "list", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "list", produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Mono<CapabilityResponseDTO> listAllCapabilities() {
 		
 		return capabilityService.listAllCapabilities()

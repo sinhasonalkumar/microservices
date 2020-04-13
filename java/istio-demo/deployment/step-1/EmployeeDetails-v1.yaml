@@ -10,7 +10,7 @@ metadata:
     service: discover-skills
 spec:
   ports:
-    - port: 8080
+    - port: 80
       name: http
   selector:
     app: discover-skills
@@ -44,7 +44,7 @@ spec:
       serviceAccountName: discover-skills-service-account
       containers:
         - name: discover-skills
-          image: docker.io/sixeyed/bookinfo-details:v1
+          image: sinhasonalkumar/discover-skills-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -61,7 +61,7 @@ metadata:
     service: capability
 spec:
   ports:
-    - port: 8080
+    - port: 80
       name: http
   selector:
     app: capability
@@ -95,10 +95,10 @@ spec:
       serviceAccountName: capability-service-account
       containers:
         - name: capability
-          image: docker.io/istio/examples-bookinfo-ratings-v1:1.15.0
+          image: sinhasonalkumar/capability-service
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 9080
+            - containerPort: 8080
 ---
 ##################################################################################################
 # user-skills-ratings-service
@@ -112,7 +112,7 @@ metadata:
     service: user-skills-ratings
 spec:
   ports:
-    - port: 8080
+    - port: 80
       name: http
   selector:
     app: user-skills-ratings
@@ -143,10 +143,10 @@ spec:
         app: user-skills-ratings
         version: v1
     spec:
-      serviceAccountName: user-skills-ratings-service
+      serviceAccountName: user-skills-ratings-service-account
       containers:
         - name: user-skills-ratings
-          image: docker.io/istio/examples-bookinfo-reviews-v1:1.15.0
+          image: sinhasonalkumar/user-skills-ratings-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -163,7 +163,7 @@ metadata:
     service: user-skills
 spec:
   ports:
-    - port: 8080
+    - port: 80
       name: http
   selector:
     app: user-skills
@@ -197,7 +197,7 @@ spec:
       serviceAccountName: user-skills-service-account
       containers:
         - name: user-skills
-          image: docker.io/sixeyed/bookinfo-productpage:v1
+          image: sinhasonalkumar/user-skills-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -215,7 +215,7 @@ metadata:
     service: user-profile
 spec:
   ports:
-    - port: 8080
+    - port: 80
       name: http
   selector:
     app: user-profile
@@ -249,59 +249,59 @@ spec:
       serviceAccountName: user-profile-service-account
       containers:
         - name: user-profile
-          image: docker.io/sixeyed/bookinfo-productpage:v1
+          image: sinhasonalkumar/user-profile-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
 ---
 
 ##################################################################################################
-# employeeDetails-service
+# employee-details-service
 ##################################################################################################
 apiVersion: v1
 kind: Service
 metadata:
-  name: employeeDetails-service
+  name: employee-details-service
   labels:
-    app: employeeDetails
-    service: employeeDetails
+    app: employee-details
+    service: employee-details
 spec:
   ports:
     - port: 8080
       name: http
   selector:
-    app: employeeDetails
+    app: employee-details
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: employeeDetails-service-account
+  name: employee-details-service-account
   labels:
-    account: employeeDetails
+    account: employee-details
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: employeeDetails-v1
+  name: employee-details-v1
   labels:
-    app: employeeDetails
+    app: employee-details
     version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: employeeDetails
+      app: employee-details
       version: v1
   template:
     metadata:
       labels:
-        app: employeeDetails
+        app: employee-details
         version: v1
     spec:
-      serviceAccountName: employeeDetails-service-account
+      serviceAccountName: employee-details-service-account
       containers:
-        - name: employeeDetails
-          image: docker.io/sixeyed/bookinfo-productpage:v1
+        - name: employee-details
+          image: sinhasonalkumar/employee-details-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

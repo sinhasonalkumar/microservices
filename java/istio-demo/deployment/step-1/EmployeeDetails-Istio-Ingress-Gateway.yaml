@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: employeeDetails-Istio-Ingress-Gateway
+  name: employee-details-istio-ingress-gateway
 spec:
   selector:
     istio: ingressgateway # use istio default controller
@@ -16,12 +16,12 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: employeeDetailsVirtualService
+  name: employee-details-virtual-service
 spec:
   hosts:
   - "*"
   gateways:
-  - employeeDetails-Istio-Ingress-Gateway
+  - employee-details-istio-ingress-gateway
   http:
   - match:
     - uri:
@@ -32,6 +32,6 @@ spec:
         prefix: /api
     route:
     - destination:
-        host: employeeDetails-service
+        host: employee-details-service
         port:
           number: 8080
