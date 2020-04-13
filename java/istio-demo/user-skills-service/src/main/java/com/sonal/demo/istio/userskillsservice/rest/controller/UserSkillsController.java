@@ -19,7 +19,7 @@ public class UserSkillsController {
 
 	private UserSkillsService userSkillsService;
 	
-	@GetMapping(value = "/details/{userId}" , produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/details/{userId}" , produces = MediaType.APPLICATION_JSON_VALUE)
 	public Mono<UserSkillsDetailsResponse> userSkillsDetails(@PathVariable String userId) {
 		return userSkillsService.getUserSkillsDetails(userId)
 				                .map(UserSkillsDetailsResponse :: new);

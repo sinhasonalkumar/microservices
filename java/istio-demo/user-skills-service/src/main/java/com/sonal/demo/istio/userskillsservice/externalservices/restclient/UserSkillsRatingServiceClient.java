@@ -24,7 +24,7 @@ public class UserSkillsRatingServiceClient {
 						.build()
 						.get()
 						.uri("/usersSkillsRatings/ratings/{userId}",userId)
-						.accept(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
 						.exchange()
 						.flatMap(r -> r.bodyToMono(UserSkillsRatings.class))
 						.map(usr -> usr.getSkillsRatings());

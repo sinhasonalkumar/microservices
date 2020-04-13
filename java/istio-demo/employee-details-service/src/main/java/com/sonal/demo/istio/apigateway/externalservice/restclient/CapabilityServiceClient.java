@@ -26,7 +26,7 @@ public class CapabilityServiceClient {
 				 .build()
 				 .get()
 				 .uri("/capabilityService/list")
-				 .accept(MediaType.APPLICATION_JSON)
+				 .accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
 				 .exchange()
 				 .flatMap(r -> r.bodyToMono(CapabilityResponse.class))
 				 .map(cr -> cr.getCapabilities());

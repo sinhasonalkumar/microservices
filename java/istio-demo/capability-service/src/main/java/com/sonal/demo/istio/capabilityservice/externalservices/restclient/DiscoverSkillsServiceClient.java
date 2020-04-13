@@ -31,7 +31,7 @@ public class DiscoverSkillsServiceClient {
 				   .build()
 				   .get()
 				   .uri("/discoverSkills/discover")
-				   .accept(MediaType.APPLICATION_JSON)
+				   .accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
 				   .exchange()
 				   .flatMap(r -> r.bodyToMono(SkillsDiscoveredDTO.class))
 				   .map(ds -> ds.getSkillsDiscovered())

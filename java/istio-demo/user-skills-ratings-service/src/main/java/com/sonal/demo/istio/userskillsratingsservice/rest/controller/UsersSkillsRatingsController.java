@@ -18,8 +18,8 @@ import reactor.core.publisher.Mono;
 public class UsersSkillsRatingsController {
 
 	private UserSkillsRatingService ueserSkillsRatingService;
-	
-	@GetMapping(value = "/ratings/{userId}", produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
+
+	@GetMapping(value = "/ratings/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Mono<UserSkillsRatings> ratings(@PathVariable String userId) {
 		return ueserSkillsRatingService.getUserSkillsRatings(userId);
 	}

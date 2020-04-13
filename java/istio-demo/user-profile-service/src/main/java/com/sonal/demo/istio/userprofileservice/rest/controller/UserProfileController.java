@@ -19,7 +19,7 @@ public class UserProfileController {
 	
 	private UserProfileService userProfileService;
 
-	@RequestMapping(value = "/{userId}",produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{userId}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public Mono<UserProfileResponse> show(@PathVariable String userId) {
 	
 		return userProfileService.getUserProfile(userId);

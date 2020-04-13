@@ -24,7 +24,7 @@ public class UserProfileServiceClient {
 						.build()
 						.get()
 						.uri("/userProfile/{userId}", userId)
-						.accept(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
 						.exchange()
 						.flatMap(r -> r.bodyToMono(UserProfileResponse.class));
 	}
@@ -36,7 +36,7 @@ public class UserProfileServiceClient {
 						.build()
 						.get()
 						.uri("/userProfile/showAll")
-						.accept(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
 						.exchange()
 						.flatMap(r -> r.bodyToMono(UsersProfilesResponse.class));
 	}

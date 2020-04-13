@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class UserSkillsServiceClient {
 	
-	@Value("${rest.client.baseurl.userProfileService}")
+	@Value("${rest.client.baseurl.userSkillsService}")
 	private String userSkillsServiceBaseURL;
 	
 	public Mono<UserSkillsDetailsResponse> getUserSkillsDetails(String userId) {
@@ -24,7 +24,7 @@ public class UserSkillsServiceClient {
 						.build()
 						.get()
 						.uri("/usersSkills/details/{userId}", userId)
-						.accept(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
 						.exchange()
 						.flatMap(r -> r.bodyToMono(UserSkillsDetailsResponse.class));
 	}
