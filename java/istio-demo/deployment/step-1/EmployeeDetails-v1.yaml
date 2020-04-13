@@ -44,7 +44,7 @@ spec:
       serviceAccountName: discover-skills-service-account
       containers:
         - name: discover-skills
-          image: sinhasonalkumar/discover-skills-service:20200413-113003.fa154a0
+          image: sinhasonalkumar/discover-skills-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -95,7 +95,7 @@ spec:
       serviceAccountName: capability-service-account
       containers:
         - name: capability
-          image: sinhasonalkumar/capability-service:20200413-113003.fa154a0
+          image: sinhasonalkumar/capability-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -146,7 +146,7 @@ spec:
       serviceAccountName: user-skills-ratings-service-account
       containers:
         - name: user-skills-ratings
-          image: sinhasonalkumar/user-skills-ratings-service:20200413-113003.fa154a0
+          image: sinhasonalkumar/user-skills-ratings-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -197,7 +197,7 @@ spec:
       serviceAccountName: user-skills-service-account
       containers:
         - name: user-skills
-          image: sinhasonalkumar/user-skills-service:20200413-113003.fa154a0
+          image: sinhasonalkumar/user-skills-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -249,7 +249,7 @@ spec:
       serviceAccountName: user-profile-service-account
       containers:
         - name: user-profile
-          image: sinhasonalkumar/user-profile-service:20200413-113003.fa154a0
+          image: sinhasonalkumar/user-profile-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -301,7 +301,7 @@ spec:
       serviceAccountName: employee-details-service-account
       containers:
         - name: employee-details
-          image: sinhasonalkumar/employee-details-service:20200413-113003.fa154a0
+          image: sinhasonalkumar/employee-details-service
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
