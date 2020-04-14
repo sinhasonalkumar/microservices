@@ -2,6 +2,7 @@ package com.sonal.demo.istio.userskillsservice.externalservices.restclient;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,8 @@ import reactor.core.publisher.Mono;
 @Service
 public class CapabilityServiceClient {
 
-	private String capabilityServiceClientBaseURL = "http://localhost:8084/";
+	@Value("${rest.client.baseurl.capabilityServiceClient}")
+	private String capabilityServiceClientBaseURL;
 	
 	public Mono<List<Capability>> getAllCapabilities() {
 		return WebClient.builder()

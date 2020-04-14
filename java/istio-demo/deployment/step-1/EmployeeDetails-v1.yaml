@@ -10,7 +10,7 @@ metadata:
     service: discover-skills
 spec:
   ports:
-    - port: 80
+    - port: 8080
       name: http
   selector:
     app: discover-skills
@@ -61,7 +61,7 @@ metadata:
     service: capability
 spec:
   ports:
-    - port: 80
+    - port: 8080
       name: http
   selector:
     app: capability
@@ -112,7 +112,7 @@ metadata:
     service: user-skills-ratings
 spec:
   ports:
-    - port: 80
+    - port: 8080
       name: http
   selector:
     app: user-skills-ratings
@@ -163,7 +163,7 @@ metadata:
     service: user-skills
 spec:
   ports:
-    - port: 80
+    - port: 8080
       name: http
   selector:
     app: user-skills
@@ -215,7 +215,7 @@ metadata:
     service: user-profile
 spec:
   ports:
-    - port: 80
+    - port: 8080
       name: http
   selector:
     app: user-profile

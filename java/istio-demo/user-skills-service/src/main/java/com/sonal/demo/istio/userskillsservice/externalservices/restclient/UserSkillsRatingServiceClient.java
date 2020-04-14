@@ -2,6 +2,7 @@ package com.sonal.demo.istio.userskillsservice.externalservices.restclient;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,8 @@ import reactor.core.publisher.Mono;
 @Service
 public class UserSkillsRatingServiceClient {
 
-	private String userSkillsRatingsServiceBaseURL = "http://localhost:8083";
+	@Value("${rest.client.baseurl.userSkillsRatingsService}")
+	private String userSkillsRatingsServiceBaseURL;
 	
 	public Mono<List<SkillsRating>> getUserSkillsRatings(String userId) {
 		return WebClient.builder()
