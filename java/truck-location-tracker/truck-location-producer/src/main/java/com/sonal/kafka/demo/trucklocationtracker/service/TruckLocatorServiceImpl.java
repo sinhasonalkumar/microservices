@@ -21,7 +21,7 @@ public class TruckLocatorServiceImpl {
 	@Autowired
 	private KafkaTemplate<String, TruckLocatedEvent> kafkaTemplate;
 
-	public ListenableFuture<SendResult<String, TruckLocatedEvent>> sendMessage(String topic, TruckLocatedEvent message) {
+	public ListenableFuture<SendResult<String, TruckLocatedEvent>> sendTruckLocationMessage(String topic, TruckLocatedEvent message) {
 
 		logger.info(String.format("TruckLocatedEvent ******* -> Emitting TruckLocated Event Message -> %s", message));
 
@@ -35,7 +35,7 @@ public class TruckLocatorServiceImpl {
 
 		logger.info("******* generated random Location event *******");
 
-		sendMessage("truckLocatorTopic", truckLocatedEvent);
+		sendTruckLocationMessage("truckLocatorTopic", truckLocatedEvent);
 
 	}
 
