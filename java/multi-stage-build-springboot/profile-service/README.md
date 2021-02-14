@@ -19,3 +19,15 @@ java -Djarmode=layertools -jar target/profile-service.jar list
 
 ```
 
+# Build Project
+
+```
+./mvnw clean package
+```
+
+
+# Build Docker Image
+
+```
+docker build -t sinhasonalkumar/profile-service:v1 .
+```

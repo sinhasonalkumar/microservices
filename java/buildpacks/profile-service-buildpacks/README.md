@@ -5,17 +5,17 @@
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-maven-plugin</artifactId>
 	<configuration>
-		<layers>
-			<enabled>true</enabled>
-		</layers>
+		<image>
+			<name>sinhasonalkumar/${project.artifactId}:v2</name>
+		</image>
 	</configuration>
 </plugin>
 ```
 
-# Layer Tool To View Layers
+# Build Application and Docker Image
 
 ```
-java -Djarmode=layertools -jar target/profile-service.jar list
+./mvnw spring-boot:build-image
 
 ```
 
