@@ -7,7 +7,8 @@
 #ENTRYPOINT ["java","-jar","/application.jar"]
 
 
-FROM openjdk:11-jre-slim as builder
+#FROM openjdk:11-jre-slim as builder
+FROM adoptopenjdk:11-jre-hotspot as builder
 WORKDIR application
 ARG JAR_FILE=target/profile-service.jar
 COPY ${JAR_FILE} application.jar
