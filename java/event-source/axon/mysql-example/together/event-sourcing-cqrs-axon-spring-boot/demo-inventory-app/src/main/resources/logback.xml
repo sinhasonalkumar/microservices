@@ -12,7 +12,7 @@
  
     <appender name="RollingFile"
         class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS}/demo-cqrs-es-axon.log</file>
+        <file>${LOGS}/demo-inventory-app.log</file>
         <encoder
             class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
@@ -21,7 +21,7 @@
         <rollingPolicy
             class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily and when the file reaches 10 MegaBytes -->
-            <fileNamePattern>${LOGS}/archived/demo-cqrs-es-axon-%d{yyyy-MM-dd}.%i.log
+            <fileNamePattern>${LOGS}/archived/demo-inventory-app-%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -35,9 +35,8 @@
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </root>
- 
     
-    <logger name="com.demo.perf" level="trace" additivity="false">
+    <logger name="com.demo.inventory" level="trace" additivity="false">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger>
