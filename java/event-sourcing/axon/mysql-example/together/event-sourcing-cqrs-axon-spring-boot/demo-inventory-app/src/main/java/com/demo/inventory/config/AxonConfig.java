@@ -8,14 +8,16 @@ import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.demo.inventory.commandmodule.aggregates.product.ProductAggregate;
+import com.demo.inventory.command.aggregates.product.ProductAggregate;
 
 @Configuration
 public class AxonConfig {
 
     @Bean
     EventSourcingRepository<ProductAggregate> ProductAggregateEventSourcingRepository(EventStore eventStore){
-        EventSourcingRepository<ProductAggregate> repository = EventSourcingRepository.builder(ProductAggregate.class).eventStore(eventStore).build();
+        EventSourcingRepository<ProductAggregate> repository = EventSourcingRepository.builder(ProductAggregate.class)
+        																			  .eventStore(eventStore)
+        																			  .build();
         return repository;
     }
     
