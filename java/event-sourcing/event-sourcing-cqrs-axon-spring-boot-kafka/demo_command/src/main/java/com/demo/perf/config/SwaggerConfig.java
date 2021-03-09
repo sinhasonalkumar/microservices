@@ -33,7 +33,7 @@ public class SwaggerConfig {
                 "App to demonstrate CQRS-ES using Axon and Spring Boot",
                 "1.0.0",
                 "Terms of Service",
-                new Contact("Sonal Kumar Sinha", "csod", "skumarsinha@csod.com"),
+                new Contact("Sonal Kumar Sinha", "mycomany", "sks@mycomany.com"),
                 "",
                 "",
                 Collections.emptyList());
