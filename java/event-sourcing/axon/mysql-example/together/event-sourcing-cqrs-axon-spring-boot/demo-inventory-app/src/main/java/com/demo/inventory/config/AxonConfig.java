@@ -14,7 +14,7 @@ import com.demo.inventory.command.aggregates.product.ProductAggregate;
 public class AxonConfig {
 
     @Bean
-    EventSourcingRepository<ProductAggregate> ProductAggregateEventSourcingRepository(EventStore eventStore){
+    public EventSourcingRepository<ProductAggregate> productAggregateEventSourcingRepository(EventStore eventStore){
         EventSourcingRepository<ProductAggregate> repository = EventSourcingRepository.builder(ProductAggregate.class)
         																			  .eventStore(eventStore)
         																			  .build();

@@ -18,11 +18,10 @@ import com.demo.inventory.event.product.ProductDeletedEvent;
 import com.demo.inventory.event.product.ProductUpdatedEvent;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Aggregate(snapshotTriggerDefinition = "inventorySnapshotTriggerDefinition")
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 public class ProductAggregate implements Serializable {
 
     /**
@@ -40,6 +39,10 @@ public class ProductAggregate implements Serializable {
     private String description;
     
     private ProductType productType;
+    
+    public ProductAggregate() {
+    	logger.info(" ************** Started Replaying Stored Events To Rehydrate  ProductAggregate *************** ");
+    }
 
     @CommandHandler
     public ProductAggregate(CreateProductCommand createProductCommand){
@@ -62,7 +65,7 @@ public class ProductAggregate implements Serializable {
 
     @EventSourcingHandler
     protected void on(ProductCreatedEvent ProductCreatedEvent){
-    	logger.info("@EventSourcingHandler :: ProductCreatedEvent : " + ProductCreatedEvent);
+    	logger.info("************** EventSourcingHandler :: ProductCreatedEvent : " + ProductCreatedEvent + " **************");
     	this.id = ProductCreatedEvent.id;
         this.name = ProductCreatedEvent.name;
         this.description = ProductCreatedEvent.description;
@@ -70,7 +73,7 @@ public class ProductAggregate implements Serializable {
     
     @EventSourcingHandler
     protected void on(ProductUpdatedEvent ProductUpdatedEvent){
-    	logger.info("@EventSourcingHandler :: ProductUpdatedEvent : " + ProductUpdatedEvent);
+    	logger.info("************** EventSourcingHandler :: ProductUpdatedEvent : " + ProductUpdatedEvent + " **************");
     	this.id = ProductUpdatedEvent.id;
         this.name = ProductUpdatedEvent.name;
         this.description = ProductUpdatedEvent.description;
@@ -78,7 +81,7 @@ public class ProductAggregate implements Serializable {
     
     @EventSourcingHandler
     protected void on(ProductDeletedEvent ProductUpdatedEvent){
-    	logger.info("@EventSourcingHandler :: ProductDeletedEvent : " + ProductUpdatedEvent);
+    	logger.info("************** EventSourcingHandler :: ProductDeletedEvent : " + ProductUpdatedEvent + " **************");
     	this.id = ProductUpdatedEvent.id;
     }
     
