@@ -29,9 +29,8 @@ public class ProductCommandServiceImpl implements ProductCommandService {
 																	  createProductDTO.getDescription(), 
 																	  createProductDTO.getProductType()
 																	);
-		CompletableFuture<String> response = commandGateway.send(createProductCommand);
 		
-		return response;
+		return commandGateway.send(createProductCommand);
 	}
 
 	@Override
