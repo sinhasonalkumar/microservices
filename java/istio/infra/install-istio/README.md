@@ -1,4 +1,4 @@
-# Steps Install Istio
+# Steps To Install Istio On minikube
 
 [Install Istio](https://www.istio.io/latest/docs/setup/getting-started/)
 
@@ -6,46 +6,52 @@
 
 ### Step-1 : Go to a directory location where you want to download istio binary
 
-### Step-2 : Run
+### Step-2 : start minikube
 
 ```
-curl -L https://istio.io/downloadIstio | sh -
-```
-
-### Step-2 : Run
-
-```
-cd istio-1.9.1
+minikube start --cpus 4 --memory 8192
 ```
 
 ### Step-3 : Run
 
 ```
-export PATH=$PWD/bin:$PATH
+curl -L https://istio.io/downloadIstio | sh -
 ```
 
 ### Step-4 : Run
 
 ```
-istioctl install --set profile=demo -y
+cd istio-1.9.1
 ```
 
 ### Step-5 : Run
 
 ```
+export PATH=$PWD/bin:$PATH
+```
+
+### Step-6 : Run
+
+```
+istioctl install --set profile=demo -y
+```
+
+### Step-7 : Run
+
+```
 kubectl label namespace default istio-injection=enabled
 ```
 
-### Step-6 : Open another terminal and run
+### Step-8 : Open another terminal and run
 
 ```
 minikube tunnel
 ```
 
-### Step-7 : Let it run alongwith other previously opened terminal
+### Step-9 : Let it run alongwith other previously opened terminal
 
 
-### Step-8 : Run
+### Step-10 : Run
 
 ```
 kubectl get svc istio-ingressgateway -n istio-system
