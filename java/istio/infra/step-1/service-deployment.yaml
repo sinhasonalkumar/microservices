@@ -1,0 +1,308 @@
+##################################################################################################
+# order-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  labels:
+    app: order-service
+    service: order-service
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: order-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: order-service-sa
+  labels:
+    account: order-service-sa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service-deployment-v1
+  labels:
+    app: order-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: order-service
+        version: v1
+    spec:
+      serviceAccountName: order-service-sa
+      containers:
+        - name: order-service-container-v1
+          image: sinhasonalkumar/order-orchestrator-service:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+##################################################################################################
+# product-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+  labels:
+    app: product-service
+    service: product-service
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: product-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: product-service-sa
+  labels:
+    account: product-service-sa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service-deployment-v1
+  labels:
+    app: product-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: product-service
+        version: v1
+    spec:
+      serviceAccountName: product-service-sa
+      containers:
+        - name: product-service-container-v1
+          image: sinhasonalkumar/product-service:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+##################################################################################################
+# shipping-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: shipping-service
+  labels:
+    app: shipping-service
+    service: shipping-service
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: shipping-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: shipping-service-sa
+  labels:
+    account: shipping-service-sa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping-service-deployment-v1
+  labels:
+    app: shipping-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shipping-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: shipping-service
+        version: v1
+    spec:
+      serviceAccountName: shipping-service-sa
+      containers:
+        - name: shipping-service-container-v1
+          image: sinhasonalkumar/shipping-service:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+##################################################################################################
+# profile-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: profile-service
+  labels:
+    app: profile-service
+    service: profile-service
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: profile-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: profile-service-sa
+  labels:
+    account: profile-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profile-service-deployment-v1
+  labels:
+    app: profile-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: profile-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: profile-service
+        version: v1
+    spec:
+      serviceAccountName: profile-service-sa
+      containers:
+        - name: profile-service-container-v1
+          image: sinhasonalkumar/notification-service:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+
+##################################################################################################
+# notification-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  labels:
+    app: notification-service
+    service: notification-service
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: notification-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: notification-service-sa
+  labels:
+    account: notification-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service-deployment-v1
+  labels:
+    app: notification-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: notification-service
+        version: v1
+    spec:
+      serviceAccountName: notification-service-sa
+      containers:
+        - name: notification-service-container-v1
+          image: sinhasonalkumar/notification-service:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+
+##################################################################################################
+# payment-service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  labels:
+    app: payment-service
+    service: payment-service
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: payment-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: payment-service-sa
+  labels:
+    account: payment-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service-deployment-v1
+  labels:
+    app: payment-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: payment-service
+        version: v1
+    spec:
+      serviceAccountName: payment-service-sa
+      containers:
+        - name: payment-service-container-v1
+          image: sinhasonalkumar/payment-service:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
