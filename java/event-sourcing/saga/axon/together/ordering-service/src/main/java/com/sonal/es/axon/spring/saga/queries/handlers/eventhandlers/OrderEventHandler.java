@@ -46,6 +46,7 @@ public class OrderEventHandler {
 		OrderBO orderBO = orderRepository.findById(shipmentRegisteredWithOrderEvent.getOrderId()).get();
 		
 		orderBO.setOrderStatus(shipmentRegisteredWithOrderEvent.getOrderStatus());
+		orderBO.setShipmentId(shipmentRegisteredWithOrderEvent.getShipmentId());
 		
 		orderRepository.save(orderBO);
 		
