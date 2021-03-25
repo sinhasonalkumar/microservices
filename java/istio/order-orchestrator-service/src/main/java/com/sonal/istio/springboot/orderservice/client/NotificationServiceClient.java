@@ -1,7 +1,6 @@
 package com.sonal.istio.springboot.orderservice.client;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -16,15 +15,14 @@ import reactor.core.publisher.Mono;
 @Service
 public class NotificationServiceClient {
 
-	@Value("${notificationServiceBaseURL}")
-	private String notificationServiceBaseURL;
+	
+	@Autowired
+	private WebClient notificationServiceWebClient;
 	
 	
 	public Mono<ChainnedResponse> sendNotification(ChainnedResponse chainnedResponse) {
-		return WebClient.builder()
-				 .baseUrl(notificationServiceBaseURL)
-				 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				 .build()
+		
+		return notificationServiceWebClient
 				 .post()
 				 .uri("/notification-service/notify/email/")
 				 .body(Mono.just(NotificationRequest.builder()

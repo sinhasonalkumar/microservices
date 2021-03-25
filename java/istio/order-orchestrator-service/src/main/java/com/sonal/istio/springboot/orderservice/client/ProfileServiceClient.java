@@ -1,7 +1,6 @@
 package com.sonal.istio.springboot.orderservice.client;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -13,15 +12,12 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class ProfileServiceClient {
-
-	@Value("${profileServiceBaseURL}")
-	private String profileServiceBaseURL;
+	
+	@Autowired
+	private WebClient profileServiceWebClient;
 	
 	public Mono<UserProfileResponse> userProfile(String userId) {
-		return WebClient.builder()
-				 .baseUrl(profileServiceBaseURL)
-				 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				 .build()
+		return profileServiceWebClient
 				 .get()
 				 .uri(uriBuilder -> uriBuilder.path("/profile-service/profile/user/{userId}").build(userId))
 				 .accept(MediaType.APPLICATION_JSON)

@@ -1,7 +1,6 @@
 package com.sonal.istio.springboot.orderservice.client;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -14,14 +13,12 @@ import reactor.core.publisher.Mono;
 @Service
 public class ProductServiceClient {
 
-	@Value("${productServiceBaseURL}")
-	private String productServiceBaseURL;
+	@Autowired
+	private WebClient productServiceWebClient;
 	
 	public Mono<ProductResponse> product(String productId) {
-		return WebClient.builder()
-				 .baseUrl(productServiceBaseURL)
-				 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				 .build()
+		
+		return productServiceWebClient
 				 .get()
 				 .uri(uriBuilder -> uriBuilder.path("/product-service/product/{productId}").build(productId))
 				 .accept(MediaType.APPLICATION_JSON)
