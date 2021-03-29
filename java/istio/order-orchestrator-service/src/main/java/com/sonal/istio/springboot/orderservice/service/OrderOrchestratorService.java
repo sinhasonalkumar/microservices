@@ -47,7 +47,7 @@ public class OrderOrchestratorService {
 					.log()
 					.flatMap(zippedResp -> paymentServiceClient.postPayment(zippedResp.getT1(), zippedResp.getT2()))
 					.log()
-					.flatMap(chainnedResp ->   shippingServiceClient.ship(chainnedResp.getUserProfileResponse(), chainnedResp.getProductResponse(), chainnedResp.getPaymentResponse(), orderRequest.getProductId()))
+					.flatMap(chainnedResp -> shippingServiceClient.ship(chainnedResp.getUserProfileResponse(), chainnedResp.getProductResponse(), chainnedResp.getPaymentResponse(), orderRequest.getProductId()))
 					.log()
 					.flatMap(chainnedResponse -> notificationServiceClient.sendNotification(chainnedResponse))
 					.log()

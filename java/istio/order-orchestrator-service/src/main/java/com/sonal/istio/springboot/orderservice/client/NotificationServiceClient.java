@@ -27,11 +27,11 @@ public class NotificationServiceClient {
 				 .uri("/notification-service/notify/email/")
 				 .body(Mono.just(NotificationRequest.builder()
 						 							.message("Your Order Has been placed successfully. Order Details " + chainnedResponse.getProductResponse())
-						                            .email(chainnedResponse.getUserProfileResponse().getEmailId()).build()), NotificationRequest.class)
+						                            .email(chainnedResponse.getUserProfileResponse().getEmailId())
+						                            .build()), NotificationRequest.class)
 				 .accept(MediaType.APPLICATION_JSON)
 				 .exchangeToMono(response -> {
-					  if (response.statusCode()
-							    .equals(HttpStatus.OK)) {
+					  if (response.statusCode().equals(HttpStatus.OK)) {
 							      return response.bodyToMono(NotificationResponse.class);
 							  } else if (response.statusCode().is4xxClientError()) {
 							      return Mono.just(NotificationResponse.builder().build());
