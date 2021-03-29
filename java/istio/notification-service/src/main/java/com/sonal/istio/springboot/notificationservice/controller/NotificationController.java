@@ -24,11 +24,11 @@ public class NotificationController {
 	
 	
 	@PostMapping(value = "/email")
-	public Mono<ResponseEntity<NotificationResponse>> notifyByEmail(@RequestBody NotificationRequest shippingRequest){
+	public Mono<ResponseEntity<NotificationResponse>> notifyByEmail(@RequestBody NotificationRequest notificationRequest){
 	
 		
-		return notificationService.notify(shippingRequest)
-				              .map(shippingResponse -> ResponseEntity.ok(shippingResponse));
+		return notificationService.notify(notificationRequest)
+				                  .map(notificationResponse -> ResponseEntity.ok(notificationResponse));
 		
 	}
 	
