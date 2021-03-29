@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/product")
 @AllArgsConstructor
-public class PaymentController {
+public class ProductController {
 
 	
 	private ProductService productService;

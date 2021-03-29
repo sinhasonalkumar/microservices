@@ -197,7 +197,7 @@ spec:
       serviceAccountName: profile-service-sa
       containers:
         - name: profile-service-container-v1
-          image: sinhasonalkumar/notification-service:v1
+          image: sinhasonalkumar/user-profile-service:v1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
