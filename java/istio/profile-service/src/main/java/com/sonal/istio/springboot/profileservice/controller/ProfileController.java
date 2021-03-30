@@ -22,11 +22,21 @@ public class ProfileController {
 	
 	
 	@GetMapping(value = "/user/{userId}")
-	public Mono<ResponseEntity<UserProfileResponse>> postPayment(@PathVariable String userId){
+	public Mono<ResponseEntity<UserProfileResponse>> getProfileByUserId(@PathVariable String userId){
 	
 		
 		return userProfileService.fetchUserProfile(userId)
-				             .map(profileResponse -> ResponseEntity.ok(profileResponse));
+				                 .map(profileResponse -> ResponseEntity.ok(profileResponse));
+		
+	}
+	
+	
+	@GetMapping(value = "/user/account/{accountId}")
+	public Mono<ResponseEntity<UserProfileResponse>> getProfileByPaymentAccountId(@PathVariable String accountId){
+	
+		
+		return userProfileService.fetchUserByAccountId(accountId)
+				                 .map(profileResponse -> ResponseEntity.ok(profileResponse));
 		
 	}
 	

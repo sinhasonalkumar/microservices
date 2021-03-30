@@ -4,6 +4,10 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.sonal.istio.springboot.paymentservice.client.NotificationServiceClient;
+import com.sonal.istio.springboot.paymentservice.client.ProfileServiceClient;
+import com.sonal.istio.springboot.paymentservice.client.vo.ChainedResponse;
+import com.sonal.istio.springboot.paymentservice.client.vo.NotificationRequest;
 import com.sonal.istio.springboot.paymentservice.persistence.bo.PaymentBO;
 import com.sonal.istio.springboot.paymentservice.repository.PaymentRepository;
 import com.sonal.istio.springboot.paymentservice.vo.PaymentResponse;
@@ -19,27 +23,47 @@ public class PaymentService {
 	
 	
 	private PaymentRepository paymentRepository;
+	
+	private ProfileServiceClient profileServiceClient;
+	
+	private NotificationServiceClient notificationServiceClient;
 
 	public Mono<PaymentResponse> pay(String accountId, Float amount) {
 		
+		
+		
 		return paymentRepository.findByAccountId(accountId)
-								.map(paymentBO -> doPayment(paymentBO, accountId, amount));
+								.map(paymentBO -> doPayment(paymentBO, accountId, amount))
+								.flatMap(paymentResponse -> profileServiceClient.userProfile(accountId,paymentResponse))
+								.flatMap(chainedRes -> notificationServiceClient.sendNotification(buildNotificationRequest(chainedRes), chainedRes))
+								.map(chainedRes -> chainedRes.getPaymentResponse());
 								
+								
+	}
+	
+	private NotificationRequest buildNotificationRequest(ChainedResponse chainedResponse) {
+		
+		return NotificationRequest.builder()
+								  .email(chainedResponse.getUserProfileResponse().getEmailId())
+								  .message(chainedResponse.getPaymentResponse().getMessage())
+								  .build();
 	}
 	
 	private PaymentResponse doPayment(PaymentBO paymentBO, String accountId, Float amount) {
 		
-		log.info("Charging Credit Card For Account " + accountId + " For amount " + amount + " ccInfo " + paymentBO);
+		String message = "Charging Credit Card For Account " + accountId + " For amount " + amount + " ccInfo " + paymentBO;
+		
+		log.info(message);
 		
 		String confirmationNumber = UUID.randomUUID().toString();
 		
-		String message = "Transaction Successful with TransactionId " + confirmationNumber;
-		log.info(message );
+		String finalMessage = "Transaction Successful with TransactionId " + confirmationNumber + " : " + message;
+		log.info(finalMessage);
 		
 		
 		return PaymentResponse.builder()
 							  .confirmationNumber(confirmationNumber)
-							  .message(message)
+							  .message(finalMessage)
 							  .build();
 	}
 	

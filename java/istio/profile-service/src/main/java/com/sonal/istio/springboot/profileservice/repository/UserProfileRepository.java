@@ -2,6 +2,7 @@ package com.sonal.istio.springboot.profileservice.repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -18,9 +19,9 @@ public class UserProfileRepository {
 
 	private static Map<String, UserProfileBO> init() {
 		
-		Map<String, UserProfileBO> allPayments = new HashMap<String, UserProfileBO>();
+		Map<String, UserProfileBO> userProfiles = new HashMap<String, UserProfileBO>();
 		
-		allPayments.put("user1", UserProfileBO.builder()
+		userProfiles.put("user1", UserProfileBO.builder()
 											 .userId("user1")
 											 .accountId("account1")
 											 .firstName("Sachin")
@@ -29,7 +30,7 @@ public class UserProfileRepository {
 											 .emailId("sachin@bcci.com")
 											 .build());
 		
-		allPayments.put("user2", UserProfileBO.builder()
+		userProfiles.put("user2", UserProfileBO.builder()
 											 .userId("user2")
 											 .accountId("account2")
 											 .firstName("Mahendra Singh")
@@ -39,7 +40,7 @@ public class UserProfileRepository {
 											 .build());
 		
 		
-		allPayments.put("user3", UserProfileBO.builder()
+		userProfiles.put("user3", UserProfileBO.builder()
 											.userId("user3")
 											.accountId("account3")
 											.firstName("Virat")
@@ -49,7 +50,7 @@ public class UserProfileRepository {
 											.build());
 		
 		
-		return allPayments;
+		return userProfiles;
 	}
 	
 	
@@ -62,6 +63,22 @@ public class UserProfileRepository {
 		return Mono.just(userProfile);
 	}
 	
+	
+	public Mono<UserProfileBO> findByPaymentAccountId(String accountId) {
+		
+		Optional<UserProfileBO> userProfileMap = userProfileStore.entrySet()
+						.stream()
+						.filter(p -> p.getValue().getAccountId().equals(accountId))
+						.findFirst()
+						.map(p -> p.getValue());
+		
+		UserProfileBO userProfile = userProfileMap.get();
+		
+		log.info("UserProfile For User With Payment Account Id : " + accountId + " is " + userProfile);
+		
+		
+		return Mono.just(userProfile);
+	} 
 	
 	
 }

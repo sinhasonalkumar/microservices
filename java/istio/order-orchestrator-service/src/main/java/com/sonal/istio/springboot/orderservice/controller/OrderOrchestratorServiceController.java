@@ -36,7 +36,7 @@ public class OrderOrchestratorServiceController {
 	@GetMapping(value = "/dockerBuildVersion")
 	public Mono<ResponseEntity<String>> dockerBuildVersion(){
 		
-		return Mono.just(ResponseEntity.ok("v1"));
+		return Mono.just(ResponseEntity.ok("v2"));
 	}
 	
 }

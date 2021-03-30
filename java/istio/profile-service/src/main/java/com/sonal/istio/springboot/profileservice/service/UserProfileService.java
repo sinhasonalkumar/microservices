@@ -28,4 +28,18 @@ public class UserProfileService {
 								
 	}
 	
+	
+	public Mono<UserProfileResponse> fetchUserByAccountId(String accountId) {
+		
+		return userProfileRepository.findByPaymentAccountId(accountId)
+								    .map(userProfile ->  UserProfileResponse.builder()
+																			.firstName(userProfile.getFirstName())
+																			.lastName(userProfile.getLastName())
+																			.accountId(userProfile.getAccountId())
+																			.address(userProfile.getAddress())
+																			.emailId(userProfile.getEmailId())
+																			.build());
+								
+	}
+	
 }
