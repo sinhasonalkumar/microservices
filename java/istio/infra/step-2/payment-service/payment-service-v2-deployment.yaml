@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service-deployment-v2
+  labels:
+    app: payment-service
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: payment-service
+        version: v2
+    spec:
+      serviceAccountName: payment-service-sa
+      containers:
+        - name: payment-service-container-v2
+          image: sinhasonalkumar/payment-service:v2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

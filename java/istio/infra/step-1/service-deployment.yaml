@@ -44,7 +44,7 @@ spec:
       serviceAccountName: order-service-sa
       containers:
         - name: order-service-container-v1
-          image: sinhasonalkumar/order-orchestrator-service:v1
+          image: sinhasonalkumar/order-orchestrator-service:v1.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
