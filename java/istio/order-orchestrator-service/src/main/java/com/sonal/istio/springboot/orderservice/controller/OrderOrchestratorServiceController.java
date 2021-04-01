@@ -1,7 +1,6 @@
 package com.sonal.istio.springboot.orderservice.controller;
 
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,14 +42,16 @@ public class OrderOrchestratorServiceController {
 		return Mono.just(ResponseEntity.ok("vFaulty"));
 	}
 	
-	
 	@GetMapping(value = "/faulty")
 	public Mono<ResponseEntity<OrderResponse>> faulty() {
-		
-		
-		
 		return faultyService.faultyMethod();
 							
+					 
+	}
+	
+	@GetMapping(value = "/slowOp")
+	public Mono<ResponseEntity<OrderResponse>> slowOp() {
+		return faultyService.slowOp();
 					 
 	}
 	

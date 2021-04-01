@@ -50,6 +50,14 @@ public class FaultyService {
 	}
 	
 	
+	public Mono<ResponseEntity<OrderResponse>> slowOp() {
+		
+		return Mono.just(ResponseEntity.ok(OrderResponse.builder()
+							  .message("Success")
+							  .build())).delayElement(Duration.ofSeconds(5));
+	}
+	
+	
 	@Scheduled(fixedDelayString = "${injectFaultDelay}")
 	public void reset() {
 		count = 0;
