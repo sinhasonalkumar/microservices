@@ -11,18 +11,12 @@ spec:
   - name: v1
     labels:
       version: v1
+    trafficPolicy:
+        outlierDetection:
+           consecutive5xxErrors: 2
+           interval: 10s
+           baseEjectionTime: 1m
+           maxEjectionPercent: 100
   - name: v2
     labels:
       version: v2
-    trafficPolicy:
-        connectionPool:
-         http:
-            http1MaxPendingRequests: 1
-            maxRequestsPerConnection: 1
-         tcp:
-            maxConnections: 1 
-        outlierDetection:
-          consecutiveErrors: 2
-          interval: 1m
-          baseEjectionTime: 5m
-          maxEjectionPercent: 100

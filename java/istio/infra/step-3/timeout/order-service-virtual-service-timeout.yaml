@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: employee-details-virtual-service
+  name: order-service-virtual-service
 spec:
   hosts:
   - "*"
@@ -16,4 +16,4 @@ spec:
         host: order-service
         port:
           number: 8080
-    timeout: 3s      
+    timeout: 1s    

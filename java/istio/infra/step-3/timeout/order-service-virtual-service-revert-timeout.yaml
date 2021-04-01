@@ -14,13 +14,5 @@ spec:
     route:
     - destination:
         host: order-service
-        subset: v1
         port:
           number: 8080
-      weight: 100    
-    - destination:
-        host: order-service
-        subset: v2
-        port:
-          number: 8080
-      weight: 0
