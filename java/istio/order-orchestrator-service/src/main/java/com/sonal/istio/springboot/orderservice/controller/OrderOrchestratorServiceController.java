@@ -44,7 +44,8 @@ public class OrderOrchestratorServiceController {
 	
 	@GetMapping(value = "/faulty")
 	public Mono<ResponseEntity<OrderResponse>> faulty() {
-		return faultyService.faultyMethod();
+		//return faultyService.faultyMethod();
+		return faultyService.fixedFaultyMethod();
 							
 					 
 	}

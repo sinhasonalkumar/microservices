@@ -49,6 +49,14 @@ public class FaultyService {
 			
 	}
 	
+	public Mono<ResponseEntity<OrderResponse>> fixedFaultyMethod(){
+		
+		return Mono.just(ResponseEntity.ok(OrderResponse.builder()
+				  .message("Success")
+				  .build()));
+			
+	}
+	
 	
 	public Mono<ResponseEntity<OrderResponse>> slowOp() {
 		
