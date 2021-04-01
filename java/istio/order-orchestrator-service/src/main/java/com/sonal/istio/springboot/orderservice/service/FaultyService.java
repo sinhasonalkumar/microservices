@@ -35,7 +35,7 @@ public class FaultyService {
 			
 			log.error(message);
 			
-			return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+			return Mono.just(ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body((OrderResponse.builder()
                     .message(message)
                     .build())));
