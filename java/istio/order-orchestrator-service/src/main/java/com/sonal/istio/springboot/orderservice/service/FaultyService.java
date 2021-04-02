@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.sonal.istio.springboot.orderservice.vo.OrderResponse;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
-@Log4j2
+@Slf4j
 @Service
 public class FaultyService {
 	

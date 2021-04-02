@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sonal.istio.springboot.orderservice.service.FaultyService;
+import com.sonal.istio.springboot.orderservice.service.LogOrderService;
 import com.sonal.istio.springboot.orderservice.service.OrderOrchestratorService;
 import com.sonal.istio.springboot.orderservice.vo.OrderRequest;
 import com.sonal.istio.springboot.orderservice.vo.OrderResponse;
@@ -25,6 +26,8 @@ public class OrderOrchestratorServiceController {
 	private OrderOrchestratorService orderOrchestratorService;
 	
 	private FaultyService faultyService;
+	
+	private LogOrderService logOrderService;
 	
 	
 	@PostMapping(value = "/place")
@@ -46,14 +49,25 @@ public class OrderOrchestratorServiceController {
 	public Mono<ResponseEntity<OrderResponse>> faulty() {
 		//return faultyService.faultyMethod();
 		return faultyService.fixedFaultyMethod();
-							
-					 
 	}
 	
 	@GetMapping(value = "/slowOp")
 	public Mono<ResponseEntity<OrderResponse>> slowOp() {
 		return faultyService.slowOp();
 					 
+	}
+	
+	@PostMapping(value = "/logOrderV1")
+	public Mono<ResponseEntity<OrderResponse>> logOrderV1(@RequestBody OrderRequest orderRequest){
+		
+		return logOrderService.logOrderV1(orderRequest);
+	}
+	
+	
+	@PostMapping(value = "/logOrderV2")
+	public Mono<ResponseEntity<OrderResponse>> logOrderV2(@RequestBody OrderRequest orderRequest){
+		
+		return logOrderService.logOrderV2(orderRequest);
 	}
 	
 }
