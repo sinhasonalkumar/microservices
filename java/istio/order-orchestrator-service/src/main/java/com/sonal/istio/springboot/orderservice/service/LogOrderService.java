@@ -1,6 +1,7 @@
 package com.sonal.istio.springboot.orderservice.service;
 
 import java.time.Instant;
+import java.util.List;
 
 import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.cloud.sleuth.annotation.SpanTag;
@@ -12,6 +13,7 @@ import com.sonal.istio.springboot.orderservice.vo.OrderResponse;
 
 import brave.Span;
 import brave.Tracer;
+import brave.Tracing;
 import brave.baggage.BaggageField;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,8 @@ import reactor.core.publisher.Mono;
 public class LogOrderService {
 
 	private Tracer tracer;
+	
+	private Tracing tracing;
 	
 	private BaggageField orderServicePayload;
 	
@@ -72,7 +76,8 @@ public class LogOrderService {
         }
 
         log.info("Back to Original_Span");
-	
+        
+       // List<Object> extra = tracer.currentSpan().context().extra();
 		
 		return Mono.just(ResponseEntity.ok(OrderResponse.builder()
 				  .message("Success")
