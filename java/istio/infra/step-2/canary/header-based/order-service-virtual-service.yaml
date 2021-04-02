@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: order-service-virtual-service
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - service-mesh-demo-istio-ingress-gateway
+  http:
+  - match:
+    - headers:
+        username:
+          exact: testUser  
+    route:
+    - destination:
+        host: order-service
+        subset: v2
+        port:
+          number: 8080
+  - route:
+     - destination:
+        host: order-service
+        subset: v1
+        port:
+          number: 8080
