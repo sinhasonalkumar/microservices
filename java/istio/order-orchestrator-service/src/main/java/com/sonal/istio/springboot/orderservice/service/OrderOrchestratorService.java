@@ -18,6 +18,7 @@ import com.sonal.istio.springboot.orderservice.vo.OrderResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -66,6 +67,11 @@ public class OrderOrchestratorService {
 		log.info("Successfully placed order and Your order has been shipped. Order Deatils : " + orderResponse);
 		
 		return orderResponse;
+	}
+	
+	public Flux<ProductResponse> listAllProducts(){
+		
+		return productServiceClient.list();
 	}
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sonal.istio.springboot.orderservice.client.vo.ProductResponse;
 import com.sonal.istio.springboot.orderservice.service.FaultyService;
 import com.sonal.istio.springboot.orderservice.service.LogOrderService;
 import com.sonal.istio.springboot.orderservice.service.OrderOrchestratorService;
@@ -15,6 +16,7 @@ import com.sonal.istio.springboot.orderservice.vo.OrderRequest;
 import com.sonal.istio.springboot.orderservice.vo.OrderResponse;
 
 import lombok.AllArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -37,6 +39,12 @@ public class OrderOrchestratorServiceController {
 		return orderOrchestratorService.placeOrder(orderRequest)
 				                       .map(shippingResponse -> ResponseEntity.ok(shippingResponse));
 		
+	}
+	
+	@GetMapping(value = "/product/list")
+	public Flux<ProductResponse> listAllProducts(){
+		
+		return orderOrchestratorService.listAllProducts();
 	}
 	
 	@GetMapping(value = "/dockerBuildVersion")
