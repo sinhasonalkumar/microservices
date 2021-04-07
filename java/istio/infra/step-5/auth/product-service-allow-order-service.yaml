@@ -1,0 +1,16 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: product-service-auth-policy
+  namespace: default
+spec:  
+  selector:
+    matchLabels:
+      app: product-service
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/order-service-sa"]
+    to:
+    - operation:
+        methods: ["GET"]
