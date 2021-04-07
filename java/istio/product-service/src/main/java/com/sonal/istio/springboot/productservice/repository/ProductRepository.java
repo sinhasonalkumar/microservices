@@ -2,13 +2,16 @@ package com.sonal.istio.springboot.productservice.repository;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
 import com.sonal.istio.springboot.productservice.persistence.bo.ProductBO;
 
 import lombok.extern.log4j.Log4j2;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Log4j2
@@ -60,5 +63,15 @@ public class ProductRepository {
 	}
 	
 	
+	public Flux<ProductBO> findAllProducts(){
+		
+		List<ProductBO> allProducts = productStore.entrySet()
+		 .stream()
+		 .map(e -> e.getValue())
+		 .collect(Collectors.toList());
+		
+		return Mono.just(allProducts)
+				   .flatMapMany(Flux::fromIterable);
+	}
 	
 }

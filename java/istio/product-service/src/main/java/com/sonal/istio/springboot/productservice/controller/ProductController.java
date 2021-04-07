@@ -10,6 +10,7 @@ import com.sonal.istio.springboot.productservice.service.ProductService;
 import com.sonal.istio.springboot.productservice.vo.ProductResponse;
 
 import lombok.AllArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -21,12 +22,19 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping(value = "/{productId}")
-	public Mono<ResponseEntity<ProductResponse>> postPayment(@PathVariable String productId){
+	public Mono<ResponseEntity<ProductResponse>> getProduct(@PathVariable String productId){
 	
 		
 		return productService.fetchProduct(productId)
-				             .map(paymentResponse -> ResponseEntity.ok(paymentResponse));
+				             .map(productResponse -> ResponseEntity.ok(productResponse));
 		
+	}
+	
+	@GetMapping(value = "/list")
+	public Flux<ProductResponse> listAllProducts(){
+		
+		return productService.findAllProducts();
+							   
 	}
 	
 }

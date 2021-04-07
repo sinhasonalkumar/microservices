@@ -6,6 +6,7 @@ import com.sonal.istio.springboot.productservice.repository.ProductRepository;
 import com.sonal.istio.springboot.productservice.vo.ProductResponse;
 
 import lombok.AllArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -24,6 +25,18 @@ public class ProductService {
 																 .cost(productBO.getCost())
 																 .build());
 								
+	}
+	
+	
+	public Flux<ProductResponse> findAllProducts() {
+		
+										
+		return productRepository.findAllProducts()
+								.map(productBO -> ProductResponse.builder()
+						 	 									 .productName(productBO.getName())
+						 	 									 .description(productBO.getDescription())
+						 	 									 .cost(productBO.getCost())
+						 	 									 .build());
 	}
 	
 	
