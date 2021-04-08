@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: order-service-deployment-v1
+  name: order-service-deployment-v3
   labels:
     app: order-service
-    version: v1
+    version: v3
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: order-service
-      version: v1
+      version: v3
   template:
     metadata:
       labels:
         app: order-service
-        version: v1
+        version: v3
     spec:
       serviceAccountName: order-service-sa
       containers:
-        - name: order-service-container-v1
-          image: sinhasonalkumar/order-orchestrator-service:vAuth
+        - name: order-service-container-v3
+          image: sinhasonalkumar/order-orchestrator-service:v3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

@@ -21,6 +21,6 @@ spec:
       containers:
         - name: order-service-container-v1
           image: sinhasonalkumar/order-orchestrator-service:vFaultySlowOp
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080

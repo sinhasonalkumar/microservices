@@ -21,6 +21,6 @@ spec:
       containers:
         - name: payment-service-container-v2
           image: sinhasonalkumar/payment-service:v2
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080

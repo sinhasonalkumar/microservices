@@ -45,7 +45,7 @@ spec:
       containers:
         - name: order-service-container-v1
           image: sinhasonalkumar/order-orchestrator-service:v1.1
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---
@@ -96,7 +96,7 @@ spec:
       containers:
         - name: product-service-container-v1
           image: sinhasonalkumar/product-service:v1
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---
@@ -147,7 +147,7 @@ spec:
       containers:
         - name: shipping-service-container-v1
           image: sinhasonalkumar/shipping-service:v1
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---
@@ -198,7 +198,7 @@ spec:
       containers:
         - name: profile-service-container-v1
           image: sinhasonalkumar/user-profile-service:v1
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---
@@ -250,7 +250,7 @@ spec:
       containers:
         - name: notification-service-container-v1
           image: sinhasonalkumar/notification-service:v1
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---
@@ -302,7 +302,7 @@ spec:
       containers:
         - name: payment-service-container-v1
           image: sinhasonalkumar/payment-service:v1
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---

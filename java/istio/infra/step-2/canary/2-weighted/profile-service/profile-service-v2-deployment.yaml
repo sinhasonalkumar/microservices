@@ -21,6 +21,6 @@ spec:
       containers:
         - name: profile-service-container-v2
           image: sinhasonalkumar/user-profile-service:v2
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080

@@ -21,6 +21,6 @@ spec:
       containers:
         - name: product-service-container-v1
           image: sinhasonalkumar/product-service:vAuth
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080

@@ -61,7 +61,7 @@ kubectl get svc istio-ingressgateway -n istio-system
 ### Step-9 : Run
 
 ```
-kubectl apply -f samples/addons/kiali.yam
+kubectl apply -f samples/addons/kiali.yaml
 ```
 
 ```
@@ -73,6 +73,6 @@ kubectl apply -f samples/addons/prometheus.yaml
 ```
 
 ```
-apply -f samples/addons/grafana.yaml
+kubectl apply -f samples/addons/grafana.yaml
 ```
 
