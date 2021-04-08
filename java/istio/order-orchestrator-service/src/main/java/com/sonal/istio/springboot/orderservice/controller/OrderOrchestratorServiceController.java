@@ -1,12 +1,14 @@
 package com.sonal.istio.springboot.orderservice.controller;
 
 
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerWebExchange;
 
 import com.sonal.istio.springboot.orderservice.client.vo.ProductResponse;
 import com.sonal.istio.springboot.orderservice.service.FaultyService;
@@ -48,9 +50,13 @@ public class OrderOrchestratorServiceController {
 	}
 	
 	@GetMapping(value = "/dockerBuildVersion")
-	public Mono<ResponseEntity<String>> dockerBuildVersion(){
+	public Mono<ResponseEntity<String>> dockerBuildVersion(ServerWebExchange exchange) {
 		
-		return Mono.just(ResponseEntity.ok("vFaulty"));
+		var cookie = ResponseCookie.from("version", "canary-v2").build();
+		
+		exchange.getResponse().addCookie(cookie);
+		
+		return Mono.just(ResponseEntity.ok("canary-v2"));
 	}
 	
 	@GetMapping(value = "/faulty")
