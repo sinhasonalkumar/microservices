@@ -13,10 +13,7 @@ spec:
       version: v1
     trafficPolicy:
         outlierDetection:
-           consecutive5xxErrors: 1
+           consecutive5xxErrors: 2
            interval: 10s
            baseEjectionTime: 1m
            maxEjectionPercent: 100
-  - name: v2
-    labels:
-      version: v2
