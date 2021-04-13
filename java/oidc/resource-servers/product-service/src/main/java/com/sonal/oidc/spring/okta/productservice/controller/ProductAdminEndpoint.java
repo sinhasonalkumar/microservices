@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping(value = "/admin/product")
 public class ProductAdminEndpoint {
 
-	@PreAuthorize("hasAuthority('Admin')")
+	@PreAuthorize("hasAuthority('SCOPE_product-svc-admin')")
 	@GetMapping(value = "/cache/refresh")
 	public ResponseEntity<ProductResponse> clearCache(){
 		

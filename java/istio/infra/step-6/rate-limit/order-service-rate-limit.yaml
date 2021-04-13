@@ -1,0 +1,192 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ratelimit-config
+data:
+  config.yaml: |
+    domain: productpage-ratelimit
+    descriptors:
+      - key: PATH
+        value: "/order-service"
+        rate_limit:
+          unit: minute
+          requests_per_unit: 5
+      - key: PATH
+        rate_limit:
+          unit: minute
+          requests_per_unit: 100
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service-deployment-v1
+  labels:
+    app: order-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: order-service
+        version: v1
+    spec:
+      serviceAccountName: order-service-sa
+      containers:
+        - name: order-service-container-v1
+          image: sinhasonalkumar/order-orchestrator-service:v1.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+      volumes:
+       - name: rate-limit-config-vol
+         configMap:
+            name: ratelimit-config    
+
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: filter-ratelimit
+  namespace: istio-system
+spec:
+  workloadSelector:
+    # select by label in the same namespace
+    labels:
+      istio: ingressgateway
+  configPatches:
+    # The Envoy config you want to modify
+    - applyTo: HTTP_FILTER
+      match:
+        context: GATEWAY
+        listener:
+          filterChain:
+            filter:
+              name: "envoy.filters.network.http_connection_manager"
+              subFilter:
+                name: "envoy.filters.http.router"
+      patch:
+        operation: INSERT_BEFORE
+        # Adds the Envoy Rate Limit Filter in HTTP filter chain.
+        value:
+          name: envoy.filters.http.ratelimit
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.filters.http.ratelimit.v3.RateLimit
+            # domain can be anything! Match it to the ratelimter service config
+            #domain: order-service-ratelimit
+            domain: "*"
+            failure_mode_deny: true
+            rate_limit_service:
+              grpc_service:
+                envoy_grpc:
+                  cluster_name: rate_limit_cluster
+                timeout: 10s
+              transport_api_version: V3
+    - applyTo: CLUSTER
+      match:
+        cluster:
+          service: order-service
+      patch:
+        operation: ADD
+        # Adds the rate limit service cluster for rate limit service defined in step 1.
+        value:
+          name: rate_limit_cluster
+          type: STRICT_DNS
+          connect_timeout: 10s
+          lb_policy: ROUND_ROBIN
+          http2_protocol_options: {}
+          load_assignment:
+            cluster_name: rate_limit_cluster
+            endpoints:
+            - lb_endpoints:
+              - endpoint:
+                  address:
+                     socket_address:
+                      address: order-service
+                      port_value: 8080
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: filter-ratelimit-svc
+  namespace: istio-system
+spec:
+  workloadSelector:
+    labels:
+      istio: ingressgateway
+  configPatches:
+    - applyTo: VIRTUAL_HOST
+      match:
+        context: GATEWAY
+        routeConfiguration:
+          vhost:
+            name: "*:80"
+            route:
+              action: ANY
+      patch:
+        operation: MERGE
+        # Applies the rate limit rules.
+        value:
+          rate_limits:
+            - actions: # any actions in here
+              - request_headers:
+                  header_name: ":path"
+                  descriptor_key: "PATH"
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: filter-local-ratelimit-svc
+  namespace: istio-system
+spec:
+  workloadSelector:
+    labels:
+      app: order-service
+  configPatches:
+    - applyTo: HTTP_FILTER
+      listener:
+        filterChain:
+          filter:
+            name: "envoy.filters.network.http_connection_manager"
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: envoy.filters.http.local_ratelimit
+          typed_config:
+            "@type": type.googleapis.com/udpa.type.v1.TypedStruct
+            type_url: type.googleapis.com/envoy.extensions.filters.http.local_ratelimit.v3.LocalRateLimit
+            value:
+              stat_prefix: http_local_rate_limiter
+              token_bucket:
+                max_tokens: 10
+                tokens_per_fill: 10
+                fill_interval: 60s
+              filter_enabled:
+                runtime_key: local_rate_limit_enabled
+                default_value:
+                  numerator: 100
+                  denominator: HUNDRED
+              filter_enforced:
+                runtime_key: local_rate_limit_enforced
+                default_value:
+                  numerator: 100
+                  denominator: HUNDRED
+              response_headers_to_add:
+                - append: false
+                  header:
+                    key: x-local-rate-limit
+                    value: 'true'
+
+---
