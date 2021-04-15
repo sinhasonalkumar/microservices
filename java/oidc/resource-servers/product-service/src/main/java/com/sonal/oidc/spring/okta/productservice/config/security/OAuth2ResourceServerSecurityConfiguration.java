@@ -4,6 +4,7 @@ package com.sonal.oidc.spring.okta.productservice.config.security;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +22,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtBearerTokenAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.OpaqueTokenAuthenticationProvider;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 
@@ -66,20 +68,25 @@ public class OAuth2ResourceServerSecurityConfiguration extends WebSecurityConfig
     
 	private AuthenticationManagerResolver<HttpServletRequest> customAuthenticationManager() {
     	
-        LinkedHashMap<RequestMatcher, AuthenticationManager> authenticationManagers = new LinkedHashMap<>();
+        Map<RequestMatcher, AuthenticationManager> authenticationManagers = new LinkedHashMap<>();
 
-        // USE JWT tokens (locally validated) to validate HEAD, GET, and OPTIONS requests
-        List<String> readMethod = Arrays.asList(HttpMethod.HEAD.name(),
-        										HttpMethod.GET.name(),
-        										HttpMethod.OPTIONS.name());
-        
+        // USE opaque tokens (remotely validated) to validate PUT, POST, and DELETE requests
+        List<String> readMethod = Arrays.asList(HttpMethod.POST.name(),
+        										HttpMethod.PUT.name(),
+        										HttpMethod.DELETE.name());
+       
         RequestMatcher readMethodRequestMatcher = request -> readMethod.contains(request.getMethod());
-        authenticationManagers.put(readMethodRequestMatcher, jwtLocalValidation());
-
-        // all other requests will use opaque tokens (remotely validated)
+        
+        // USE opaque tokens (remotely validated) to validate URI fall under URI antmatcher and httpMethod as PATCH 
+        AntPathRequestMatcher antPathRequestMatcher = new AntPathRequestMatcher("/**/product/**", HttpMethod.PATCH.name());
+        
+        authenticationManagers.put(antPathRequestMatcher, opaqueTokenValidationByRemoteIntrospection());
+        authenticationManagers.put(readMethodRequestMatcher, opaqueTokenValidationByRemoteIntrospection());
+        
         RequestMatchingAuthenticationManagerResolver authenticationManagerResolver = new RequestMatchingAuthenticationManagerResolver(authenticationManagers);
         
-        authenticationManagerResolver.setDefaultAuthenticationManager(opaqueTokenValidationByRemoteIntrospection());
+        // all other requests will USE JWT tokens (locally validated)
+        authenticationManagerResolver.setDefaultAuthenticationManager(jwtLocalValidation());
         
         return authenticationManagerResolver;
     } 
