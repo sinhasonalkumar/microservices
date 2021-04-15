@@ -1,4 +1,4 @@
-package com.sonal.oidc.spring.okta.productservice.config;
+package com.sonal.oidc.spring.okta.productservice.config.security;
 
 import java.util.ArrayList;
 import java.util.Collections;
