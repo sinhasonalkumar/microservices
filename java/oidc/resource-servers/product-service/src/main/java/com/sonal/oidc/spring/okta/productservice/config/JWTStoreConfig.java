@@ -16,7 +16,7 @@ import com.sonal.oidc.spring.okta.productservice.filter.JWTFilter;
 import com.sonal.oidc.spring.okta.productservice.filter.JWTStore;
 
 @Configuration
-public class BearerTokenConfig {
+public class JWTStoreConfig {
 
 	@Bean
 	public Filter jwtFilter() {
