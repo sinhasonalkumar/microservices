@@ -34,6 +34,17 @@ public class ProductController {
 
 		return ResponseEntity.ok(allProducts);
 	}
+	
+	
+	@PreAuthorize("hasAuthority('SCOPE_product-svc')")
+	@GetMapping(value = "/remoteList")
+	//public ResponseEntity<ProductResponse> list(JwtAuthenticationToken jwt){
+	public ResponseEntity<ProductResponse> remoteList(BearerTokenAuthentication jwt){
+		
+		log.info("jwt information " + jwt);
+		
+		return productService.getAllProductsRemotly();
+	}
 
 	
 	@PreAuthorize("hasAuthority('SCOPE_product-svc')")
