@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.annotation.RequestScope;
 
@@ -41,10 +42,16 @@ public class RestTemplateConfig {
 		
 		return (request, body, execution) -> {
 			
-			request.getHeaders().add(HttpHeaders.AUTHORIZATION, jwtStore.getJwt());
+			if(!ObjectUtils.isEmpty(jwtStore.getJwt())) {
+				request.getHeaders().add(HttpHeaders.AUTHORIZATION, jwtStore.getJwt());
+				log.info("******** Current JWT ************ " + jwtStore.getJwt());
+			}else {
+				log.info("******** No JWT ************ ");
+			}
+			
 			request.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 			
-			log.info("******** Current JWT ************ " + jwtStore.getJwt());
+			
 			
 			ClientHttpResponse response = execution.execute(request, body);
 			
