@@ -1,0 +1,288 @@
+# Subject : User
+
+## Step1 : generate .key
+```
+openssl genrsa -out devUser.key 2048
+```
+## Step2 : generate .csr
+
+```
+openssl req -new \
+    -key devUser.key \
+    -out devUser.csr \
+    -subj "/CN=devUser/O=devUsersGroup"
+```
+
+## Step3 : ca.crt and ca.key location for minikube
+
+```
+ls ~/.minikube/ca.crt
+```
+```
+ls ~/.minikube/ca.key
+```
+
+## Step4 : Sign csr with ca cert and ca key of minikube 
+
+```
+openssl x509 -req \
+    -in devUser.csr \
+    -CA ~/.minikube/ca.crt \
+    -CAkey ~/.minikube/ca.key \
+    -CAcreateserial \
+    -out devUser.crt \
+    -days 500
+```
+
+## Step4 : Configure kubeConfig
+
+### set-credentials
+```
+kubectl config set-credentials devUser \
+    --client-certificate=devUser.crt \
+    --client-key=devUser.key
+```    
+### set-context
+
+```
+kubectl config set-context devUser-context \
+    --cluster=minikube \
+    --namespace=default \
+    --user=devUser
+```
+
+### view kube config
+
+```
+kubectl config view
+```
+
+## Step5 : Set current kube context
+
+```
+kubectx devUser-context
+```
+or
+
+```
+kubectl config use-context devUser-context
+```
+
+### Check current kube context 
+
+```
+kubectl config current-context
+```
+
+## Step6 : Try to get all pods
+
+```
+kubectl get pods
+```
+
+### At this point authentication is fine but have no authorization to access any kubernetes resources
+
+
+## Step7 : Step Roles and RoleBinding For DevUser for giving access to kubernetes resources
+
+### Switch context to minikube 
+
+```
+kubectx minikube
+```
+or
+
+```
+kubectl config use-context minikube
+```
+
+### Apply Role
+
+```
+kubectl apply -f role.yaml
+```
+
+### Apply RoleBinding
+
+```
+kubectl apply -f role-binding.yaml
+```
+
+### view Roles and RoleBinding
+
+```
+kubectl get roles,roleBinding reader-access
+```
+
+### Switch context to devUser-context 
+
+```
+kubectx devUser-context
+```
+or
+
+```
+kubectl config use-context devUser-context
+```
+
+## Step6 : Try to get all pods
+
+### Check current kube context 
+
+```
+kubectl config current-context
+```
+### get all pods
+```
+kubectl get pods
+```
+
+### get all services
+```
+kubectl get svc
+```
+
+
+# Subject : Group
+
+## Step1 : generate .key
+```
+openssl genrsa -out devUser1.key 2048
+```
+## Step2 : generate .csr
+
+```
+openssl req -new \
+    -key devUser1.key \
+    -out devUser1.csr \
+    -subj "/CN=devUser1/O=devUsersGroup"
+```
+
+## Step3 : ca.crt and ca.key location for minikube
+
+```
+ls ~/.minikube/ca.crt
+```
+```
+ls ~/.minikube/ca.key
+```
+
+## Step4 : Sign csr with ca cert and ca key of minikube 
+
+```
+openssl x509 -req \
+    -in devUser1.csr \
+    -CA ~/.minikube/ca.crt \
+    -CAkey ~/.minikube/ca.key \
+    -CAcreateserial \
+    -out devUser1.crt \
+    -days 500
+```
+
+## Step4 : Configure kubeConfig
+
+### set-credentials
+```
+kubectl config set-credentials devUser1 \
+    --client-certificate=devUser1.crt \
+    --client-key=devUser1.key
+```    
+### set-context
+
+```
+kubectl config set-context devUser1-context \
+    --cluster=minikube \
+    --namespace=default \
+    --user=devUser1
+```
+
+### view kube config
+
+```
+kubectl config view
+```
+
+## Step5 : Set current kube context
+
+```
+kubectx devUser1-context
+```
+or
+
+```
+kubectl config use-context devUser1-context
+```
+
+### Check current kube context 
+
+```
+kubectl config current-context
+```
+
+## Step6 : Try to get all pods
+
+```
+kubectl get pods
+```
+
+### At this point authentication is fine but have no authorization to access any kubernetes resources
+
+
+## Step7 : Step Roles and RoleBinding For DevUser for giving access to kubernetes resources
+
+### Switch context to minikube 
+
+```
+kubectx minikube
+```
+or
+
+```
+kubectl config use-context minikube
+```
+
+### Apply Role
+
+```
+kubectl apply -f role.yaml
+```
+
+### Apply RoleBinding
+
+```
+kubectl apply -f role-binding-kind-group.yaml
+```
+
+### view Roles and RoleBinding
+
+```
+kubectl get roles,roleBinding
+```
+
+### Switch context to devUser-context 
+
+```
+kubectx devUser1-context
+```
+or
+
+```
+kubectl config use-context devUser1-context
+```
+
+## Step6 : Try to get all pods
+
+### Check current kube context 
+
+```
+kubectl config current-context
+```
+### get all pods
+```
+kubectl get pods
+```
+
+### get all services
+```
+kubectl get svc
+```
