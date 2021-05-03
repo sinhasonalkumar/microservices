@@ -142,6 +142,20 @@ kubectl get pods
 kubectl get svc
 ```
 
+## Step7 : Try to interact with kube api-srver with client key and client cert 
+
+```
+curl -k \
+https://192.168.64.10:8443/api
+```
+
+```
+curl -k \
+--cert devUser.crt \
+--key devUser.key \
+https://192.168.64.10:8443/api
+```
+
 
 # Subject : Group
 
