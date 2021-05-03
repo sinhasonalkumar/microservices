@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service-deployment-v1
+  labels:
+    app: product-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: product-service
+        version: v1
+    spec:
+      serviceAccountName: product-service-sa
+      containers:
+        - name: product-service-container-v1
+          image: sinhasonalkumar/product-service:vAuth
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
