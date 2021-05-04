@@ -34,7 +34,7 @@ openssl x509 -req \
     -days 500
 ```
 
-## Step4 : Configure kubeConfig
+## Step5 : Configure kubeConfig
 
 ### set-credentials
 ```
@@ -57,7 +57,7 @@ kubectl config set-context devUser-context \
 kubectl config view
 ```
 
-## Step5 : Set current kube context
+## Step6 : Set current kube context
 
 ```
 kubectx devUser-context
@@ -74,7 +74,7 @@ kubectl config use-context devUser-context
 kubectl config current-context
 ```
 
-## Step6 : Try to get all pods
+## Step7 : Try to get all pods
 
 ```
 kubectl get pods
@@ -83,7 +83,7 @@ kubectl get pods
 ### At this point authentication is fine but have no authorization to access any kubernetes resources
 
 
-## Step7 : Step Roles and RoleBinding For DevUser for giving access to kubernetes resources
+## Step8 : Step Roles and RoleBinding For DevUser for giving access to kubernetes resources
 
 ### Switch context to minikube 
 
@@ -125,7 +125,7 @@ or
 kubectl config use-context devUser-context
 ```
 
-## Step6 : Try to get all pods
+## Step9 : Try to get all pods
 
 ### Check current kube context 
 
@@ -142,7 +142,7 @@ kubectl get pods
 kubectl get svc
 ```
 
-## Step7 : Try to interact with kube api-srver with client key and client cert 
+## Step10 : Try to interact with kube api-srver with client key and client cert 
 
 ```
 curl -k \
@@ -169,7 +169,7 @@ curl \
 --cert devUser.crt \
 --key devUser.key \
 --cacert ~/.minikube/ca.crt \
-https://192.168.64.10:8443/api/v1/namespace/default/pods
+https://192.168.64.10:8443/api/v1/namespaces/default/pods
 ```
 
 
@@ -209,7 +209,7 @@ openssl x509 -req \
     -days 500
 ```
 
-## Step4 : Configure kubeConfig
+## Step5 : Configure kubeConfig
 
 ### set-credentials
 ```
@@ -232,7 +232,7 @@ kubectl config set-context devUser1-context \
 kubectl config view
 ```
 
-## Step5 : Set current kube context
+## Step6 : Set current kube context
 
 ```
 kubectx devUser1-context
@@ -249,7 +249,7 @@ kubectl config use-context devUser1-context
 kubectl config current-context
 ```
 
-## Step6 : Try to get all pods
+## Step7 : Try to get all pods
 
 ```
 kubectl get pods
@@ -258,7 +258,7 @@ kubectl get pods
 ### At this point authentication is fine but have no authorization to access any kubernetes resources
 
 
-## Step7 : Step Roles and RoleBinding For DevUser for giving access to kubernetes resources
+## Step8 : Step Roles and RoleBinding For DevUser for giving access to kubernetes resources
 
 ### Switch context to minikube 
 
@@ -300,7 +300,7 @@ or
 kubectl config use-context devUser1-context
 ```
 
-## Step6 : Try to get all pods
+## Step9 : Try to get all pods
 
 ### Check current kube context 
 
@@ -315,4 +315,84 @@ kubectl get pods
 ### get all services
 ```
 kubectl get svc
+```
+
+# Subject : ServiceAccount
+
+## Step1 : Apply Deployment with default Service Account
+```
+kubectl apply -f rbac-deployment-default-sa.yaml
+```
+## Step2 : Apply ServiceAccount 
+
+```
+kubectl apply -f rbac-service-account.yaml
+```
+
+## Step3 : Apply Deployment with Custom Service Account
+
+```
+kubectl apply -f rbac-deployment-with-sa.yaml
+```
+
+## Step4 : Apply Role and RoleBinding
+
+```
+kubectl apply -f role.yaml
+```
+
+```
+kubectl apply -f role-binding-kind-service-account.yaml
+```
+
+## Step5 : ssh into pod deployed with default service account in step1
+
+### Describe pod to get location secret mount to know location of ca.crt and bearer token which will be 
+
+```
+/var/run/secrets/kubernetes.io/serviceaccount
+```
+
+### ssh into pod
+```
+cd /var/run/secrets/kubernetes.io/serviceaccount
+```
+
+```
+token=`cat token`
+```
+
+```
+curl --cacert ca.crt -H "Authorization: Bearer $token" https://kubernetes/api
+```
+
+```
+curl --cacert ca.crt -H "Authorization: Bearer $token" https://kubernetes/api/v1/namespaces/defau
+lt/pods
+```
+
+## Step6 : ssh into pod deployed with custom service account in step3
+
+### Describe pod to get location secret mount to know location of ca.crt and bearer token which will be 
+
+```
+/var/run/secrets/kubernetes.io/serviceaccount
+```
+
+### ssh into pod
+```
+cd /var/run/secrets/kubernetes.io/serviceaccount
+```
+
+```
+token=`cat token`
+```
+
+```
+curl --cacert ca.crt -H "Authorization: Bearer $token" https://kubernetes/api
+```
+
+```
+curl --cacert ca.crt -H "Authorization: Bearer $token" https://kubernetes/api/v1/namespaces/defau
+lt/pods
 ```

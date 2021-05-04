@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rbac-with-sa-deployment-v1
+  labels:
+    app: rbac-with-sa
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rbac-with-sa
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: rbac-with-sa
+        version: v1
+    spec:
+      serviceAccountName: rbac-sa
+      containers:
+        - name: rbac-with-sa-container-v1
+          image: curlimages/curl
+          imagePullPolicy: Always
+          command: [ "sleep", "6000" ]
