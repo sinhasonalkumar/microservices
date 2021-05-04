@@ -353,7 +353,16 @@ kubectl apply -f role-binding-kind-service-account.yaml
 /var/run/secrets/kubernetes.io/serviceaccount
 ```
 
-### ssh into pod
+### ssh into pod 
+
+###
+
+```
+ kubectl exec -it [pod-name] -- /bin/bash
+```
+or 
+Use K9s to ssh
+
 ```
 cd /var/run/secrets/kubernetes.io/serviceaccount
 ```
@@ -379,7 +388,14 @@ lt/pods
 /var/run/secrets/kubernetes.io/serviceaccount
 ```
 
-### ssh into pod
+### ssh into pod 
+
+```
+ kubectl exec -it [pod-name] -- /bin/bash
+```
+or 
+Use K9s to ssh
+
 ```
 cd /var/run/secrets/kubernetes.io/serviceaccount
 ```
