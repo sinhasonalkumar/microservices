@@ -156,6 +156,22 @@ curl -k \
 https://192.168.64.10:8443/api
 ```
 
+```
+curl \
+--cert devUser.crt \
+--key devUser.key \
+--cacert ~/.minikube/ca.crt \
+https://192.168.64.10:8443/api
+```
+
+```
+curl \
+--cert devUser.crt \
+--key devUser.key \
+--cacert ~/.minikube/ca.crt \
+https://192.168.64.10:8443/api/v1/namespace/default/pods
+```
+
 
 # Subject : Group
 
