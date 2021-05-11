@@ -319,6 +319,8 @@ kubectl get svc
 
 # Subject : ServiceAccount
 
+## For Machine
+
 ## Step1 : Apply Deployment with default Service Account
 ```
 kubectl apply -f rbac-deployment-default-sa.yaml
@@ -411,4 +413,160 @@ curl --cacert ca.crt -H "Authorization: Bearer $token" https://kubernetes/api
 ```
 curl --cacert ca.crt -H "Authorization: Bearer $token" https://kubernetes/api/v1/namespaces/defau
 lt/pods
+```
+# Subject : ServiceAccount
+
+## For User
+
+## Step1 : Apply Service Account For dev-user2
+```
+kubectl apply -f rbac-service-account-dev-user2.yaml
+```
+
+## Step2 : Apply Secret for dev-user2 Service Account
+```
+kubectl apply -f dev-user2-secret.yaml
+```
+
+## Step3 : View Service Account and Secrets
+```
+kubectl get secret,sa
+```
+
+## Step3 : Copy Token from dev-user2 secret
+
+### View Token
+
+```
+kubectl describe secret dev-user2-secret 
+```
+### Copy Token to Mac Clipboard
+
+```
+kubectl describe secret dev-user2-secret | awk -F "token:" '{printf $2}' | xargs | pbcopy
+```
+
+### View JWT 
+
+```
+pbpaste | jwt
+```
+OR 
+
+```
+kubectl describe secret dev-user2-secret | awk -F "token:" '{printf $2}' | xargs | jwt
+```
+
+## Step4 : Update kube config
+
+### paste copied to token value to token variable
+
+```
+token=`pbpaste`
+```
+
+### set-credentials
+
+```
+kubectl config set-credentials devUser2 \
+    --token=$token
+```
+
+### set-context
+
+```
+kubectl config set-context devUser2-context \
+    --cluster=minikube \
+    --namespace=default \
+    --user=devUser2
+```
+
+## Step5 : Set current kube context
+
+```
+kubectx devUser2-context
+```
+
+or
+
+```
+kubectl config use-context devUser2-context
+```
+
+### Check current kube context
+
+```
+kubectl config current-context
+```
+
+## Step6 : Try to get all pods
+
+```
+kubectl get pods
+```
+
+At this point authentication is fine but have no authorization to access any kubernetes resources
+
+
+## Step7 : Step Roles and RoleBinding For DevUser2 for giving access to kubernetes resources
+
+### Switch context to minikube
+
+```
+kubectx minikube
+```
+or 
+
+```
+kubectl config use-context minikube
+```
+
+### Apply Role
+
+```
+kubectl apply -f role.yaml
+```
+
+### Apply Role
+
+```
+kubectl apply -f role-binding-kind-service-account-dev-user2.yaml
+```
+
+### view Roles and RoleBinding
+
+```
+kubectl get roles,roleBinding
+```
+
+### Switch context to devUser-context
+
+```
+kubectx devUser2-context
+```
+
+or
+
+```
+kubectl config use-context devUser2-context
+```
+
+### Step8 : Try to get all pods
+
+### Check current kube context
+
+```
+kubectl config current-context
+```
+
+### get all pods
+
+```
+kubectl get pods
+```
+
+### get all services
+
+```
+kubectl get svc
 ```
