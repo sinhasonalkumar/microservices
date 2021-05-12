@@ -54,7 +54,14 @@ spec:
             - containerPort: 8080
           env:
           - name: JAVA_TOOL_OPTIONS
-            value: "-Xms64m -Xmx128m"    
+            value: "-Xms128m -Xmx512m"    
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "1"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
           readinessProbe:
             httpGet:
               path: /order-service/actuator/health
@@ -78,11 +85,4 @@ spec:
           #    path: /order-service/actuator/health
           #    port: 8080
           #  initialDelaySeconds: 15
-          #  periodSeconds: 20    
-          # resources:
-          #   requests:
-          #     memory: "1024Mi"
-          #     cpu: "250m"
-          #   limits:
-          #     memory: "2048Mi"
-          #     cpu: "500m" 
+          #  periodSeconds: 20
