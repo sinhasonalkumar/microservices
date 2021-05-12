@@ -51,7 +51,9 @@ spec:
           image: sinhasonalkumar/order-orchestrator-service:v1.1
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - name: order-svc-port 
+              containerPort: 8080
+              #hostPort: 8080
           env:
           - name: JAVA_TOOL_OPTIONS
             value: "-Xms128m -Xmx512m"    
@@ -65,7 +67,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /order-service/actuator/health
-              port: 8080
+              port: order-svc-port
             initialDelaySeconds: 15
             periodSeconds: 2
             timeoutSeconds: 1
@@ -74,7 +76,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /order-service/actuator/health
-              port: 8080
+              port: order-svc-port
             initialDelaySeconds: 15
             periodSeconds: 2
             timeoutSeconds: 1
@@ -83,6 +85,6 @@ spec:
           # startupProbe:
           #  httpGet:
           #    path: /order-service/actuator/health
-          #    port: 8080
+          #    port: order-svc-port
           #  initialDelaySeconds: 15
           #  periodSeconds: 20
