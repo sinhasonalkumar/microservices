@@ -1,0 +1,88 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  labels:
+    app: order-service
+    service: order-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort : 8080
+      name: http
+  selector:
+    app: order-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: order-service-sa
+  labels:
+    account: order-service-sa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service-deployment-v1
+  labels:
+    app: order-service
+    version: v1
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: order-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: order-service
+        version: v1
+    spec:
+      serviceAccountName: order-service-sa
+      containers:
+        - name: order-service-container-v1
+          image: sinhasonalkumar/order-orchestrator-service:v1.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+          - name: JAVA_TOOL_OPTIONS
+            value: "-Xms512m -Xmx1024m"    
+          readinessProbe:
+            httpGet:
+              path: /order-service/actuator/health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 2
+            timeoutSeconds: 1
+            successThreshold: 2
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: /order-service/actuator/health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 2
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 2
+          # startupProbe:
+          #  httpGet:
+          #    path: /order-service/actuator/health
+          #    port: 8080
+          #  initialDelaySeconds: 15
+          #  periodSeconds: 20    
+          # resources:
+          #   requests:
+          #     memory: "1024Mi"
+          #     cpu: "250m"
+          #   limits:
+          #     memory: "2048Mi"
+          #     cpu: "500m" 
