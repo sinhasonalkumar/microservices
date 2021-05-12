@@ -54,7 +54,7 @@ spec:
             - containerPort: 8080
           env:
           - name: JAVA_TOOL_OPTIONS
-            value: "-Xms512m -Xmx1024m"    
+            value: "-Xms64m -Xmx128m"    
           readinessProbe:
             httpGet:
               path: /order-service/actuator/health
