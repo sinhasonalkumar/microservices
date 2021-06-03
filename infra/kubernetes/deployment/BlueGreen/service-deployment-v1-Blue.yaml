@@ -60,29 +60,29 @@ spec:
             value: "-Xms128m -Xmx512m"    
           resources:
             requests:
-              memory: "128Mi"
-              cpu: "1"
+              memory: 130Mi
+              cpu: 600m
             limits:
-              memory: "512Mi"
-              cpu: "1"
+              memory: 520Mi
+              cpu: 1000m
           readinessProbe:
             httpGet:
               path: /order-service/actuator/health
               port: order-svc-port
             initialDelaySeconds: 15
-            periodSeconds: 2
-            timeoutSeconds: 1
+            periodSeconds: 5
+            timeoutSeconds: 3
             successThreshold: 2
-            failureThreshold: 2
+            failureThreshold: 4
           livenessProbe:
             httpGet:
               path: /order-service/actuator/health
               port: order-svc-port
-            initialDelaySeconds: 15
-            periodSeconds: 2
-            timeoutSeconds: 1
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 3
             successThreshold: 1
-            failureThreshold: 2
+            failureThreshold: 4
           # startupProbe:
           #  httpGet:
           #    path: /order-service/actuator/health
