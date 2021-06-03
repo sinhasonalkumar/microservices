@@ -1,0 +1,9 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.sonal.spring.security.oidc.config.filter.JWTFilter,\
+com.sonal.spring.security.oidc.config.restclient.RestTemplateConfig,\
+com.sonal.spring.security.oidc.config.security.Oauth2Config,\
+com.sonal.spring.security.oidc.config.security.OAuth2ResourceServerSecurityConfiguration,\
+com.sonal.spring.security.oidc.config.security.AllowAllResourceServerSecurityConfiguration,\
+com.sonal.spring.security.oidc.config.security.OIDCWebSecurityConfigurer,\
+com.sonal.spring.security.oidc.config.JWTStoreConfig
+
