@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cache-server-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cache-server
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: cache-server
+    spec:
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1 
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - web-server
+                topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: cache-server-container
+        image: redis:6.2.4-alpine
