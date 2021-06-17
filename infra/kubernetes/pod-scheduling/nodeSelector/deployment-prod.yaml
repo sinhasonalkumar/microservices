@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: order-service-sa
+  labels:
+    account: order-service-sa
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service-deployment-v1
+  labels:
+    app: order-service
+    version: v1
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: order-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: order-service
+        version: v1
+    spec:
+      serviceAccountName: order-service-sa
+      nodeSelector:
+          env: prod
+      containers:
+        - name: order-service-container-v1
+          image: sinhasonalkumar/order-orchestrator-service:v1.1
+          imagePullPolicy: Always
+          ports:
+            - name: order-svc-port 
+              containerPort: 8080
+              #hostPort: 8080
+          env:
+          - name: JAVA_TOOL_OPTIONS
+            value: "-Xms128m -Xmx512m"
+          resources:
+            requests:
+              memory: 130Mi
+              cpu: 600m
+            limits:
+              memory: 520Mi
+              cpu: 1000m
+          readinessProbe:
+            httpGet:
+              path: /order-service/actuator/health
+              port: order-svc-port
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 2
+            failureThreshold: 4
+          livenessProbe:
+            httpGet:
+              path: /order-service/actuator/health
+              port: order-svc-port
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 4
