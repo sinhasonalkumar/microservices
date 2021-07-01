@@ -68,6 +68,43 @@ kubectl get nodes --show-labels -l env=prod
 kubectl get nodes --show-labels -l env=dev
 ```
 
+## Step 6 : Create Taint To Worker Node
+
+```
+kubectl taint nodes kind-worker2 workLoad=prod:NoSchedule
+```
+
+```
+kubectl taint nodes kind-worker3 workLoad=prod:NoSchedule
+```
+
+OR
+
+```
+kubectl taint nodes -l env=prod workLoad=prod:NoSchedule
+```
+
+
+## Step 7 : Describe Node To See Taints
+
+```
+kubectl describe nodes kind-worker2
+```
+
+```
+kubectl describe nodes kind-worker3
+```
+
+OR 
+
+```
+kubectl describe nodes kind-worker2|grep -i taint
+```
+
+```
+kubectl describe nodes kind-worker3|grep -i taint
+```
+
 
 ## Note : 
 
@@ -87,6 +124,24 @@ kubectl label nodes kind-worker3 env-
 
 ```
 kubectl label nodes kind-worker env=dev app=java
+```
+
+### Command to remove taint
+
+```
+kubectl taint nodes kind-worker2 workLoad-
+```
+
+
+```
+kubectl taint nodes kind-worker3 workLoad-
+```
+
+OR
+
+
+```
+kubectl taint nodes -l env=prod workLoad-
 ```
 
 
