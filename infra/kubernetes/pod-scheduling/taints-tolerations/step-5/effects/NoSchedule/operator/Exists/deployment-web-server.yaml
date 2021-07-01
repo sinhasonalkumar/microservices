@@ -14,14 +14,8 @@ spec:
     spec:
       tolerations:
         - key: workLoad
-          operator: "Equal"
-          value: prod
+          operator: "Exists"
           effect: NoSchedule
-        - key: mem
-          operator: "Equal"
-          value: low
-          effect: NoExecute
-          tolerationSeconds: 30  
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
