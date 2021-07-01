@@ -10,7 +10,7 @@ kubectl apply -f deployment-web-server.yaml
 kubectl taint nodes kind-worker4 mem=high:NoExecute
 ```
 
-pod will be removed from kind-worker4 after 30 seconds
+pod will be removed from kind-worker4
 
 ## Step-3 
 

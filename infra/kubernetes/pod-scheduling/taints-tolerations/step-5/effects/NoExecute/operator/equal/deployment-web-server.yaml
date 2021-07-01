@@ -21,7 +21,6 @@ spec:
           operator: "Equal"
           value: low
           effect: NoExecute
-          tolerationSeconds: 30  
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
