@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-server-deployment-qa-v1
+spec:
+  selector:
+    matchLabels:
+      app: web-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web-server
+        version : v1
+        env : qa
+    spec:
+      containers:
+      - name: web-server-container
+        image: nginx:1.20.0-alpine
