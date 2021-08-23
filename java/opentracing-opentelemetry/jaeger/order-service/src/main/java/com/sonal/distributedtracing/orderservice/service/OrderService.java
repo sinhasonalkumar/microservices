@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import com.sonal.distributedtracing.orderservice.vo.OrderRequestVO;
 import com.sonal.distributedtracing.orderservice.vo.OrderResponseVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class OrderService {
 
