@@ -1,4 +1,6 @@
-package com.sonal.distributedtracing.orderservice.rest;
+package com.sonal.distributedtracing.shipping.rest;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -7,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sonal.distributedtracing.orderservice.service.OrderService;
-import com.sonal.distributedtracing.orderservice.vo.OrderRequestVO;
-import com.sonal.distributedtracing.orderservice.vo.OrderResponseVO;
+import com.sonal.distributedtracing.shipping.service.ShippingService;
+import com.sonal.distributedtracing.shipping.vo.ShippingRequestVO;
+import com.sonal.distributedtracing.shipping.vo.ShippingResponseVO;
 
 import brave.Tracer;
 import lombok.extern.slf4j.Slf4j;
@@ -17,24 +19,25 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/order")
-public class OrderController {
+@RequestMapping("/shipment")
+public class ShipmentController {
 
 	@Autowired
 	private Tracer tracer;
 	
 	@Autowired
-	private OrderService orderService;
+	private ShippingService shippingService;
 	
 	@PostMapping
-	public ResponseEntity<OrderResponseVO> placeOrder(@RequestBody OrderRequestVO orderRequestVO){
+	public ResponseEntity<ShippingResponseVO> shipOrderRequest(@RequestBody ShippingRequestVO shippingRequestVO){
+		
 		
 		log.info("Active Trace : " + tracer.currentSpan().context().traceIdString());
 		log.info("Active Span : " + tracer.currentSpan().context().spanIdString());
 		
 		log.info("started");
 		
-		ResponseEntity<OrderResponseVO> response = ResponseEntity.ok(orderService.placeOrder(orderRequestVO));
+		ResponseEntity<ShippingResponseVO> response = ResponseEntity.ok(shippingService.shipOrderRequest(shippingRequestVO));
 		
 		log.info("Ended");
 		
