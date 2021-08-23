@@ -2,6 +2,8 @@ package com.sonal.distributedtracing.shipping.rest;
 
 
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,7 @@ import com.sonal.distributedtracing.shipping.vo.ShippingRequestVO;
 import com.sonal.distributedtracing.shipping.vo.ShippingResponseVO;
 
 import brave.Tracer;
+import brave.baggage.BaggageField;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -30,6 +33,10 @@ public class ShipmentController {
 	
 	@PostMapping
 	public ResponseEntity<ShippingResponseVO> shipOrderRequest(@RequestBody ShippingRequestVO shippingRequestVO){
+		
+		
+		 Map<String, String> allValues = BaggageField.getAllValues();
+		
 		
 		
 		log.info("Active Trace : " + tracer.currentSpan().context().traceIdString());
