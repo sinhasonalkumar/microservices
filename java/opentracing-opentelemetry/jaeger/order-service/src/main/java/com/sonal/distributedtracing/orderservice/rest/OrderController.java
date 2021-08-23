@@ -1,5 +1,7 @@
 package com.sonal.distributedtracing.orderservice.rest;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,11 @@ import com.sonal.distributedtracing.orderservice.vo.OrderRequestVO;
 import com.sonal.distributedtracing.orderservice.vo.OrderResponseVO;
 
 import brave.Tracer;
+import brave.baggage.BaggageField;
+import brave.baggage.BaggagePropagation;
+import brave.baggage.BaggagePropagationConfig;
+import brave.propagation.B3Propagation;
+import brave.propagation.aws.AWSPropagation;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -28,6 +35,17 @@ public class OrderController {
 	
 	@PostMapping
 	public ResponseEntity<OrderResponseVO> placeOrder(@RequestBody OrderRequestVO orderRequestVO){
+		
+//		BaggagePropagation.newFactoryBuilder(B3Propagation.FACTORY)
+//						  .add(BaggagePropagationConfig.SingleBaggageField.remote(BaggageField.create("productId")))
+//						  .build();
+		
+		String baggageKey = "productId";
+	    String baggageValue = "cricket bat";
+	    BaggageField baggageField = BaggageField.create(baggageKey);
+	    baggageField.updateValue(baggageValue);
+	    
+	    Map<String, String> allValues = BaggageField.getAllValues();
 		
 		log.info("Active Trace : " + tracer.currentSpan().context().traceIdString());
 		log.info("Active Span : " + tracer.currentSpan().context().spanIdString());
