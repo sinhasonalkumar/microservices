@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.sonal.distributedtracing.orderservice.annotation.LogTimeElapsed;
 import com.sonal.distributedtracing.orderservice.client.vo.ShippingRequestVO;
 import com.sonal.distributedtracing.orderservice.client.vo.ShippingResponseVO;
 import com.sonal.distributedtracing.orderservice.vo.OrderRequestVO;
@@ -26,6 +27,7 @@ public class ShippingServiceClient {
 	@Value("${service.shipping.baseURL:http://localhost:8081/shipping-service}")
 	private String shippingServiceBaseURL;
 	
+	@LogTimeElapsed
 	public ShippingResponseVO ship(OrderRequestVO orderRequestVO) {
 		
 		tracer.currentSpan().tag("peer.service", "shipping-service");

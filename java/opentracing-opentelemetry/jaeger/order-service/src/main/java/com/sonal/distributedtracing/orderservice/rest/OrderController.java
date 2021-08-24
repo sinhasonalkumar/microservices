@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sonal.distributedtracing.orderservice.annotation.LogTimeElapsed;
 import com.sonal.distributedtracing.orderservice.service.OrderService;
 import com.sonal.distributedtracing.orderservice.vo.OrderRequestVO;
 import com.sonal.distributedtracing.orderservice.vo.OrderResponseVO;
@@ -31,6 +32,7 @@ public class OrderController {
 	@Autowired
 	private BaggageField productIdField;
 
+	@LogTimeElapsed
 	@PostMapping
 	public ResponseEntity<OrderResponseVO> placeOrder(@RequestBody OrderRequestVO orderRequestVO) {
 
@@ -48,11 +50,13 @@ public class OrderController {
 		return response;
 	}
 	
+	@LogTimeElapsed
 	private void updateBaggagev2(OrderRequestVO orderRequestVO) {
 
 		productIdField.updateValue(orderRequestVO.getProductId());
 	}
 
+	@LogTimeElapsed
 	private void updateBaggagev1(OrderRequestVO orderRequestVO) {
 
 		//		BaggagePropagation.newFactoryBuilder(B3Propagation.FACTORY)

@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sonal.distributedtracing.orderservice.annotation.LogTimeElapsed;
 import com.sonal.distributedtracing.orderservice.client.ShippingServiceClient;
 import com.sonal.distributedtracing.orderservice.client.vo.ShippingResponseVO;
 import com.sonal.distributedtracing.orderservice.vo.OrderRequestVO;
@@ -23,6 +24,7 @@ public class OrderService {
 	@Autowired
 	private ShippingServiceClient shippingServiceClient;
 	
+	@LogTimeElapsed
 	public OrderResponseVO placeOrder(OrderRequestVO orderRequestVO) {
 		
 		String orderId = UUID.randomUUID().toString();

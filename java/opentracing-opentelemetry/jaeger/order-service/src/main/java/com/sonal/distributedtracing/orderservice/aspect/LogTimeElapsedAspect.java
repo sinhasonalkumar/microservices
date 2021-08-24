@@ -1,4 +1,4 @@
-package com.sonal.distributedtracing.orderservice.interceptor;
+package com.sonal.distributedtracing.orderservice.aspect;
 
 import static net.logstash.logback.argument.StructuredArguments.kv;
 
@@ -7,15 +7,14 @@ import java.time.Instant;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Aspect
+//@Aspect
 @Component
-public class LogTimeElapsedInterceptor {
+public class LogTimeElapsedAspect {
 
 	@Around(value = "execution(* com.sonal.distributedtracing.orderservice..*(..))")
 	public Object logTimeElapsed(ProceedingJoinPoint pjp) throws Throwable {
