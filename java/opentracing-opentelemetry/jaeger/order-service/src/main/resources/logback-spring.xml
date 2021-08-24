@@ -39,10 +39,10 @@
 						"timestamp": "@timestamp",
 						"severity": "%level",
 						"service": "${springAppName:-}",
-						"trace": "%X{traceId:-}",
-						"span": "%X{spanId:-}",
+						"traceId": "%X{traceId:-}",
+						"spanId": "%X{spanId:-}",
 						"productId": "%X{productId:-}",
-						"message": "%message",
+						"log": "%message",
 						"pid": "${PID:-}",
 						"thread": "%thread",
 						"class": "%logger{40}"
