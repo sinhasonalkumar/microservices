@@ -58,6 +58,22 @@
 			</providers>
 		</encoder>
 	</appender>
+	
+	<appender name="console_json_v1" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<!-- Minimum logging level to be presented in the console logs-->
+			<level>DEBUG</level>
+		</filter>
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<providers>
+				<timestamp>
+					<timeZone>UTC</timeZone>
+				</timestamp>
+			</providers>
+		</encoder>
+	</appender>
+	
+	
 
 	<!-- Appender to log to file -->
 	<appender name="flatfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -90,13 +106,15 @@
 						"timestamp": "@timestamp",
 						"severity": "%level",
 						"service": "${springAppName:-}",
-						"trace": "%X{traceId:-}",
-						"span": "%X{spanId:-}",
-						"baggage": "%X{key:-}",
-						"message": "%message",
+						"traceId": "%X{traceId:-}",
+						"spanId": "%X{spanId:-}",
+						"productId": "%X{productId:-}",
+						"log": "%message",
+						"stackTrace" : "%stacktrace{10,20,1024,rootFirst:-}",
 						"pid": "${PID:-}",
 						"thread": "%thread",
 						"class": "%logger{40}"
+						
 						}
 					</pattern>
 				</pattern>
@@ -106,7 +124,7 @@
 	
 
 	<root level="INFO">
-		<appender-ref ref="console_json"/>
+		<appender-ref ref="console_json_v1"/>
 		<!-- uncomment this to have also JSON logs -->
 		<!--<appender-ref ref="logstash"/>-->
 		<!--<appender-ref ref="flatfile"/>-->

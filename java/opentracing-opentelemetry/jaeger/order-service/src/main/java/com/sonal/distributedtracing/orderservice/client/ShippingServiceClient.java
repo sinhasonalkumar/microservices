@@ -1,17 +1,23 @@
 package com.sonal.distributedtracing.orderservice.client;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import static net.logstash.logback.argument.StructuredArguments.kv;
 
 import com.sonal.distributedtracing.orderservice.client.vo.ShippingRequestVO;
 import com.sonal.distributedtracing.orderservice.client.vo.ShippingResponseVO;
 import com.sonal.distributedtracing.orderservice.vo.OrderRequestVO;
 
 import brave.Tracer;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class ShippingServiceClient {
 	
@@ -25,6 +31,10 @@ public class ShippingServiceClient {
 	private String shippingServiceBaseURL;
 	
 	public ShippingResponseVO ship(OrderRequestVO orderRequestVO) {
+		
+		Instant start = Instant.now();
+		
+		log.info("Entry com.sonal.distributedtracing.orderservice.client.vo.ShippingResponseVO.ship");
 		
 		
 		tracer.currentSpan().tag("peer.service", "shipping-service");
@@ -40,6 +50,13 @@ public class ShippingServiceClient {
 		ResponseEntity<ShippingResponseVO> shippingResponseEntity = restTemplate.postForEntity(shippingServiceBaseURL + "/shipment", shippingRequest, ShippingResponseVO.class);
 		
 		ShippingResponseVO shippingResponseVO = shippingResponseEntity.getBody();
+		
+		Instant finish = Instant.now();
+		long timeElapsed = Duration.between(start, finish).toMillis();
+		
+		log.info("ShippingResponseVO ship(OrderRequestVO orderRequestVO)", kv("timeElapsed", timeElapsed));
+		
+		log.info("Exit com.sonal.distributedtracing.orderservice.client.vo.ShippingResponseVO.ship ");
 		
 		return shippingResponseVO;
 		
