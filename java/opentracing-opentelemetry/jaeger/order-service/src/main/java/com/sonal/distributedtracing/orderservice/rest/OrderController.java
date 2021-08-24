@@ -2,7 +2,6 @@ package com.sonal.distributedtracing.orderservice.rest;
 
 import java.util.Map;
 
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +15,6 @@ import com.sonal.distributedtracing.orderservice.vo.OrderResponseVO;
 
 import brave.Tracer;
 import brave.baggage.BaggageField;
-import brave.baggage.BaggagePropagation;
-import brave.baggage.BaggagePropagationConfig;
-import brave.propagation.B3Propagation;
-import brave.propagation.aws.AWSPropagation;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -48,11 +43,7 @@ public class OrderController {
 		log.info("Active Trace : " + tracer.currentSpan().context().traceIdString());
 		log.info("Active Span : " + tracer.currentSpan().context().spanIdString());
 
-		log.info("started");
-
 		ResponseEntity<OrderResponseVO> response = ResponseEntity.ok(orderService.placeOrder(orderRequestVO));
-
-		log.info("Ended");
 
 		return response;
 	}
