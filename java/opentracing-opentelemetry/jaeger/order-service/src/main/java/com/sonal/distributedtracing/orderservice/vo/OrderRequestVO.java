@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
+@ToString
 @Builder
 @Data
 public class OrderRequestVO implements Serializable {

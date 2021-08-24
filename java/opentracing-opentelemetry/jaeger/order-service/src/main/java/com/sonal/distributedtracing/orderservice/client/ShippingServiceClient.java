@@ -38,9 +38,13 @@ public class ShippingServiceClient {
 															 .productId(orderRequestVO.getProductId())
 															 .build();
 		
+		log.info("Shipping Request = " + shippingRequest);
+		
 		ResponseEntity<ShippingResponseVO> shippingResponseEntity = restTemplate.postForEntity(shippingServiceBaseURL + "/shipment", shippingRequest, ShippingResponseVO.class);
 		
 		ShippingResponseVO shippingResponseVO = shippingResponseEntity.getBody();
+		
+		log.info("Shipping Response = " + shippingRequest);
 		
 		return shippingResponseVO;
 		
