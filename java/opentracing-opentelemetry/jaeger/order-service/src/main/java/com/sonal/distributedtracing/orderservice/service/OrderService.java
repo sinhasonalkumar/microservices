@@ -28,7 +28,7 @@ public class OrderService {
 		String orderId = UUID.randomUUID().toString();
 		
 		log.info("Order Services : Order Id  " + orderId );
-		tracer.currentSpan().tag("productId", orderRequestVO.getProductId());
+		
 		tracer.currentSpan().tag("orderId", orderId);
 		
 		OrderResponseVO build = OrderResponseVO.builder()

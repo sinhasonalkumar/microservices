@@ -35,9 +35,7 @@ public class ShipmentController {
 	public ResponseEntity<ShippingResponseVO> shipOrderRequest(@RequestBody ShippingRequestVO shippingRequestVO){
 		
 		
-		 Map<String, String> allValues = BaggageField.getAllValues();
-		
-		
+		printBaggages();
 		
 		log.info("Active Trace : " + tracer.currentSpan().context().traceIdString());
 		log.info("Active Span : " + tracer.currentSpan().context().spanIdString());
@@ -49,5 +47,18 @@ public class ShipmentController {
 		log.info("Ended");
 		
 		return response;
+	}
+	
+	private void printBaggages() {
+		
+		 Map<String, String> allValues = BaggageField.getAllValues();
+		 
+		 StringBuilder baggages = new StringBuilder(); 
+		 
+		 allValues.keySet()
+		 		  .stream()
+		 		  .forEach(b -> baggages.append(b + "=" + allValues.get(b)));
+		 
+		 log.info("Baggages : " + baggages);
 	}
 }
