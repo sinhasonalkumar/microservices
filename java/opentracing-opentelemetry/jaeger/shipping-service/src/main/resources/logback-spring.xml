@@ -22,6 +22,10 @@
 		</encoder>
 	</appender>
 	
+	<conversionRule
+    conversionWord="stacktrace"
+    converterClass="net.logstash.logback.stacktrace.ShortenedThrowableConverter" />
+	
 	<!-- Appender to log to console -->
 	<appender name="console_json" class="ch.qos.logback.core.ConsoleAppender">
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -43,6 +47,7 @@
 						"spanId": "%X{spanId:-}",
 						"productId": "%X{productId:-}",
 						"log": "%message",
+						"stackTrace" : "%stacktrace{10,20,1024,rootFirst:-}",
 						"pid": "${PID:-}",
 						"thread": "%thread",
 						"class": "%logger{40}"
