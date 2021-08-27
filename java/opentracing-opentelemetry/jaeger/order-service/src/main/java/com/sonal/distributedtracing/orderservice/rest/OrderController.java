@@ -42,8 +42,8 @@ public class OrderController {
 
 		Map<String, String> allValues = BaggageField.getAllValues();
 
-		log.info("Active Trace : " + tracer.currentSpan().context().traceIdString());
-		log.info("Active Span : " + tracer.currentSpan().context().spanIdString());
+		log.debug("Active Trace : " + tracer.currentSpan().context().traceIdString());
+		log.debug("Active Span : " + tracer.currentSpan().context().spanIdString());
 
 		ResponseEntity<OrderResponseVO> response = ResponseEntity.ok(orderService.placeOrder(orderRequestVO));
 

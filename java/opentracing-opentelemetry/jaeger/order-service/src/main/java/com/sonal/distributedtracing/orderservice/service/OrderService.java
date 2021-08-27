@@ -29,7 +29,7 @@ public class OrderService {
 		
 		String orderId = UUID.randomUUID().toString();
 		
-		log.info("Order Services : Order Id  " + orderId );
+		log.debug("Order Services : Order Id  " + orderId );
 		
 		tracer.currentSpan().tag("orderId", orderId);
 		
