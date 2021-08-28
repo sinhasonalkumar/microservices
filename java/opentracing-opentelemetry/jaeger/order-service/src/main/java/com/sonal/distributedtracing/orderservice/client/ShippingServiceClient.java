@@ -24,7 +24,7 @@ public class ShippingServiceClient {
 	@Autowired
 	private Tracer tracer;
 	
-	@Value("${service.shipping.baseURL:http://localhost:8081/shipping-service}")
+	@Value("${orderservice.client.shippingservice.base.url:http://localhost:8081/shipping-service}")
 	private String shippingServiceBaseURL;
 	
 	@LogTimeElapsed

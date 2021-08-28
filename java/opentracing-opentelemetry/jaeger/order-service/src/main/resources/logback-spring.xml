@@ -3,7 +3,7 @@
 	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
 	<springProperty scope="context" name="springAppName" source="spring.application.name"/>
-	<springProperty scope="context" name="consoleLogPattern" source="com.sonal.distributedtracing.orderservice.consoleLogPattern"/>
+	<springProperty name="consoleLogPattern" source="orderservice.log.consoleLogPattern"/>
 	
 	
 	<property name="LOG_FILE" value="${BUILD_FOLDER:-build}/${springAppName}"/>
@@ -31,7 +31,7 @@
 		</encoder>
 	</appender>
 	
-	<appender name="stash_elasticsearch" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+	<!-- <appender name="stash_elasticsearch" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>127.0.0.1:5000</destination>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 		</filter>
@@ -43,7 +43,7 @@
 			</providers>
 		</encoder>
         <keepAliveDuration>5 minutes</keepAliveDuration>
-    </appender>
+    </appender> -->
 	
 	<logger name="com.sonal.distributedtracing.orderservice" level="INFO" />
 
