@@ -98,17 +98,13 @@ data:
         Replace_Dots    On
         Retry_Limit     False
   parsers.conf: |
-    [PARSER]
-        Name                     multi_line
-        Format                   regex
-        Regex                    (?<log>^{"log":"\d{4}-\d{2}-\d{2}.*)
+    
     [PARSER]
         Name        docker
         Format      json
         Time_Key    time
         Time_Format %Y-%m-%dT%H:%M:%S.%L
         Time_Keep   On
-        Decode_Field_As   escaped_utf8      log
         
     [PARSER]
         Name   json
