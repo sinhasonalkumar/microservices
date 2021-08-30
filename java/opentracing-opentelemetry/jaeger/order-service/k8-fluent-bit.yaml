@@ -64,14 +64,17 @@ data:
     @INCLUDE output-elasticsearch.conf
   input-kubernetes.conf: |
     [INPUT]
-        Name              tail
-        Tag               kube.*
-        Path              /var/log/containers/*.log
-        Parser            docker
-        DB                /var/log/flb_kube.db
-        Mem_Buf_Limit     5MB
-        Skip_Long_Lines   On
-        Refresh_Interval  10
+        Name               tail
+        Tag                kube.*
+        Path               /var/log/containers/*.log
+        Docker_Mode        On
+        Docker_Mode_Flush  5
+        Docker_Mode_Parser multi_line
+        Parser             docker
+        DB                 /var/log/flb_kube.db
+        Mem_Buf_Limit      5MB
+        Skip_Long_Lines    Off
+        Refresh_Interval   10
   filter-kubernetes.conf: |
     [FILTER]
         Name                kubernetes
@@ -96,12 +99,17 @@ data:
         Retry_Limit     False
   parsers.conf: |
     [PARSER]
+        Name                     multi_line
+        Format                   regex
+        Regex                    (?<log>^{"log":"\d{4}-\d{2}-\d{2}.*)
+    [PARSER]
         Name        docker
         Format      json
         Time_Key    time
         Time_Format %Y-%m-%dT%H:%M:%S.%L
         Time_Keep   On
         Decode_Field_As   escaped_utf8      log
+        
     [PARSER]
         Name   json
         Format json
