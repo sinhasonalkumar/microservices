@@ -1,4 +1,4 @@
-package com.sonal.distributedtracing.orderservice.aspect;
+package com.sonal.distributedtracing.shipping.aspect;
 
 import static net.logstash.logback.argument.StructuredArguments.kv;
 
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class LogTimeElapsedAnnotationAspect {
 
-	@Around("@annotation(com.sonal.distributedtracing.orderservice.annotation.LogTimeElapsed)")
+	@Around("@annotation(com.sonal.distributedtracing.shipping.annotation.LogTimeElapsed)")
 	public Object handleException(ProceedingJoinPoint pjp) throws Throwable {
 		
 		Instant start = Instant.now();

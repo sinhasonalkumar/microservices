@@ -3,8 +3,10 @@ package com.sonal.distributedtracing.shipping.service;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.stereotype.Service;
 
+import com.sonal.distributedtracing.shipping.annotation.LogTimeElapsed;
 import com.sonal.distributedtracing.shipping.vo.ShippingRequestVO;
 import com.sonal.distributedtracing.shipping.vo.ShippingResponseVO;
 
@@ -18,6 +20,8 @@ public class ShippingService {
 	@Autowired
 	private Tracer tracer;
 
+	@NewSpan(name = "shipOrderRequest")
+	@LogTimeElapsed
 	public ShippingResponseVO shipOrderRequest(ShippingRequestVO orderRequestVO) {
 		
 		String shipmentId = UUID.randomUUID().toString();

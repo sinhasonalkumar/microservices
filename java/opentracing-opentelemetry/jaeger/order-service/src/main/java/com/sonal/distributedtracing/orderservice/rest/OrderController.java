@@ -3,6 +3,7 @@ package com.sonal.distributedtracing.orderservice.rest;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +33,7 @@ public class OrderController {
 	@Autowired
 	private BaggageField productIdField;
 
+	@NewSpan("placeOrder")
 	@LogTimeElapsed
 	@PostMapping
 	public ResponseEntity<OrderResponseVO> placeOrder(@RequestBody OrderRequestVO orderRequestVO) {
