@@ -57,10 +57,10 @@ spec:
           env:
           - name: JAVA_TOOL_OPTIONS
             value: "-Xms128m -Xmx512m"
-          - name: "spring.zipkin.base-url"
+          - name: spring.zipkin.base-url
             value: "http://jaeger-collector:9411" 
-          - name: "orderservice.client.shippingservice.base.url"
-            value: "http://shipping-service:8080/shipping-service"         
+          - name: orderservice.client.shippingservice.base.url
+            value: "http://shipping-service/shipping-service"         
           resources:
             requests:
               memory: 130Mi
