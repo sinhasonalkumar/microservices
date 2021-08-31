@@ -25,6 +25,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
@@ -32,7 +37,8 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
 		</dependency>
-		
+
+
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
@@ -51,6 +57,7 @@
 			<artifactId>logstash-logback-encoder</artifactId>
 			<version>6.6</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -77,17 +84,23 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>${project.name}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<layers>
+						<enabled>true</enabled>
+					</layers>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<source>11</source>
+					<target>11</target>
 				</configuration>
 			</plugin>
 		</plugins>
