@@ -24,7 +24,7 @@ public class LogTimeElapsedAnnotationAspect {
 
 		String signature = pjp.getSignature().toString();
 		
-		String methodName = pjp.getSignature().toShortString();
+		String methodName = pjp.getSignature().getName();
 
 		log.info("ENTRY " + signature);
 

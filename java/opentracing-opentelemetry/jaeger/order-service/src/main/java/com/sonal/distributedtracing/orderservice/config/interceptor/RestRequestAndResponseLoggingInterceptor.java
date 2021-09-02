@@ -37,10 +37,10 @@ public class RestRequestAndResponseLoggingInterceptor implements ClientHttpReque
 			
 			StringBuilder requestDetails = new StringBuilder();
 			
-			requestDetails.append("URI         : " + request.getURI() + " - ");
-			requestDetails.append("Method      : " + request.getMethod() + " - ");
-			requestDetails.append("Headers     : " + request.getHeaders() + " - ");
-			requestDetails.append("Request body: " + new String(requestBody, StandardCharsets.UTF_8));
+			requestDetails.append("URI         = " + request.getURI() + " \n");
+			requestDetails.append("Method      = " + request.getMethod() + "\n");
+			requestDetails.append("Headers     = " + request.getHeaders() + "\n");
+			requestDetails.append("Request body = " + new String(requestBody, StandardCharsets.UTF_8));
 			
 			log.debug(requestDetails.toString());
 		}
@@ -49,7 +49,7 @@ public class RestRequestAndResponseLoggingInterceptor implements ClientHttpReque
 
 	private void logResponse(ClientHttpResponse response) throws IOException {
 		
-		HttpStatus httpStatusCode = response.getStatusCode();
+		Integer httpStatusCode = response.getStatusCode().value();
 		
 		log.info("HttpStatusCode=" + httpStatusCode, kv("HttpStatusCode", httpStatusCode));
 		
@@ -61,9 +61,9 @@ public class RestRequestAndResponseLoggingInterceptor implements ClientHttpReque
             									         .collect(Collectors.joining("\n"));
             StringBuilder responseDetails = new StringBuilder();
             
-            responseDetails.append("Status code   : " + httpStatusCode + " - ");
-            responseDetails.append("Headers       : " +  response.getHeaders() + " - ");
-            responseDetails.append("Response body : " +  responseBody);
+            responseDetails.append("Status code   = " + httpStatusCode + "\n");
+            responseDetails.append("Headers       = " +  response.getHeaders() + "\n");
+            responseDetails.append("Response body = " +  responseBody);
             
             log.debug(responseDetails.toString());
         }
