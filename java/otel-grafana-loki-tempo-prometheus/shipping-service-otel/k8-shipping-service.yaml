@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shipping-service
+  labels:
+    app: shipping-service
+    service: shipping-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort : 8080
+      name: http
+  selector:
+    app: shipping-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: shipping-service-sa
+  labels:
+    account: shipping-service-sa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping-service-deployment-v1
+  labels:
+    app: shipping-service
+    version: v1
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: shipping-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: shipping-service
+        version: v1
+    spec:
+      serviceAccountName: shipping-service-sa
+      containers:
+        - name: shipping-service-container-v1
+          image: sinhasonalkumar/shipping-service-jaeger:v1
+          imagePullPolicy: Always
+          ports:
+            - name: order-svc-port 
+              containerPort: 8080
+              #hostPort: 8080
+          env:
+          - name: JAVA_TOOL_OPTIONS
+            value: "-Xms128m -Xmx512m"
+          - name: spring.zipkin.base-url
+            value: "http://jaeger-collector:9411"    
+          - name: server.port
+            value: "8080"      
+          resources:
+            requests:
+              memory: 130Mi
+              cpu: 600m
+            limits:
+              memory: 520Mi
+              cpu: 1000m
+          readinessProbe:
+            httpGet:
+              path: /shipping-service/actuator/health
+              port: order-svc-port
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 2
+            failureThreshold: 4
+          livenessProbe:
+            httpGet:
+              path: /shipping-service/actuator/health
+              port: order-svc-port
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 4
+          # startupProbe:
+          #  httpGet:
+          #    path: /shipping-service/actuator/health
+          #    port: order-svc-port
+          #  initialDelaySeconds: 15
+          #  periodSeconds: 20
