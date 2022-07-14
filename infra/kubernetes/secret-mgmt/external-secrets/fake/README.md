@@ -91,7 +91,7 @@ Watch the terminal of step-10 for rotated secret
 **_NOTE:_** In the non fake provider like AWS Secret Manager or HashiCorp valut, you just have to rotate secret and rotated secert will reflect the running pods. 
 
 
-**_NOTE:_** If the secrets are injected as file (secret as mounted volume) then rotated secret key will be reflecetd to pod automatically with rolling restart of pods. But if they are injected as environment variable then rolling restart is required. 
+**_Gotcha:_** If the secrets are injected as file (secret as mounted volume) then rotated secret key will be reflecetd to pod automatically with rolling restart of pods. But if they are injected as environment variable then rolling restart is required. 
 
 
 
