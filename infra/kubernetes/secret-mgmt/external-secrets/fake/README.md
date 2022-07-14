@@ -67,6 +67,29 @@ kubectl get secrets app-in-sync-secret -o yaml | yq .data | awk -F ":" '{print $
 
 ### Step-10
 
+Watch for the secret in pod in separate terminal
+
+```
+while true; do kubectl exec -it pod/nginx -- cat /var/app-secret/my-secret_key; echo "\n"; sleep 1; done
+```
+
+### Step-11
+
 Test secret rotation. After secret rotation controller will keep rotated secret in sync and will refresh k8 secret resource and pod will have rotated secret
+
+Edit cluster-secret-store.yaml and update the value of key '/my-secret/key' from 'super-secret-v1' to 'super-secret-v1-rotated'
+
+```
+k apply  -f cluster-secret-store.yaml
+```
+
+### Step-12
+
+Watch the terminal of step-10 for rotated secret
+
+
+**_NOTE:_** In the non fake provider like AWS Secret Manager or HashiCorp valut, you just have to rotate secret and rotated secert will reflect the running pods. 
+
+
 
 
