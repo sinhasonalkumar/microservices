@@ -70,7 +70,7 @@ kubectl get secrets app-in-sync-secret -o yaml | yq .data | awk -F ":" '{print $
 Watch for the secret in pod in separate terminal
 
 ```
-while true; do kubectl exec -it pod/nginx -- cat /var/app-secret/my_secret_key; echo "\n"; sleep 1; done
+while true; do kubectl exec -it deployment/nginx -- cat /var/app-secret/my_secret_key; echo "\n"; sleep 1; done
 ```
 
 ### Step-11
