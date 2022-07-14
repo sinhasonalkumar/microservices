@@ -37,7 +37,7 @@ kubectl apply -f nginx.yaml
 ### Step-6 
 
 ```
-kubectl get all -n external-system
+kubectl get all -n external-secrets
 ```
 
 ### Step-7
