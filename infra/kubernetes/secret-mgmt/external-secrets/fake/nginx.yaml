@@ -6,6 +6,13 @@ spec:
   containers:
   - name: nginx
     image: nginx
+    env:
+      - name: MY_SECRET_KEY
+        valueFrom:
+          secretKeyRef:
+            name: app-in-sync-secret
+            key: my_secret_key
+            optional: false
     volumeMounts:
     - name: app-secret-vol
       mountPath: "/var/app-secret"
