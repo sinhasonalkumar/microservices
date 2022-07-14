@@ -56,13 +56,15 @@ Corresponding kubernetes Secret Resource will be created by external secrets con
 
 ```
 kubectl get secret app-in-sync-secret
-
+```
+```
 kubectl describe secret app-in-sync-secret
-
+```
+```
 kubectl get secrets app-in-sync-secret -o yaml | yq .data.my_secret_key | base64 -d
-
+```
+```
 kubectl get secrets app-in-sync-secret -o yaml | yq .data | awk -F ":" '{print $2}' | base64 -d
-
 ```
 
 ### Step-10
