@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::[AccountNumber]:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/[ProviderId]"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.us-east-1.amazonaws.com/id/[ProviderId]:sub": "system:serviceaccount:demo:external-secrets-eks-demo-sa"
+        }
+      }
+    }
+  ]
+}

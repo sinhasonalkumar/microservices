@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: demo
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          env:
+            - name: MY_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-in-sync-secret-aws
+                  key: my_secret_key
+                  optional: false
+          volumeMounts:
+          - name: app-secret-vol
+            mountPath: "/var/app-secret"
+            readOnly: true
+      volumes:
+      - name: app-secret-vol
+        secret:
+          secretName: app-in-sync-secret-aws
+          optional: false
