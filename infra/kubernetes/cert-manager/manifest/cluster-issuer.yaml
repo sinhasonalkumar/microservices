@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: echo-mycompany-com-cert
+  namespace: echoserver
+spec:
+  acme:
+    email: abc@xyz.com
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: echo-mycompany-com-cert
+    solvers:
+    - http01:
+        ingress:
+          class: nginx

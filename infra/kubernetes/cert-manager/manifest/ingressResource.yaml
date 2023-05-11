@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: echoserver
+  namespace: echoserver
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: echo-mycompany-com-cert
+spec:
+  tls:
+  - hosts:
+    - echo.mycompany.com
+    secretName: echo-mycompany-com-cert
+  rules:
+  - host: echo.mycompany.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: echoserver
+            port:
+              number: 80
