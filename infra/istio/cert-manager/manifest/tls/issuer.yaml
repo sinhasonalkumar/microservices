@@ -1,0 +1,16 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: echo-mycompany-com-cert
+  namespace: istio-system
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: abc@xyz.com
+    privateKeySecretRef:
+      name: echo-mycompany-com-cert
+    solvers:
+    - http01:
+        ingress:
+          class: istio

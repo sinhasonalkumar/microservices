@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: echo-mycompany-com-cert
+  namespace: istio-system
+spec:
+  secretName: echo-mycompany-com-cert
+  issuerRef:
+    name: echo-mycompany-com-cert
+  commonName: echo.mycompany.com
+  dnsNames:
+  - echo.mycompany.com
