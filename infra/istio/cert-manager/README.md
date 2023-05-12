@@ -51,6 +51,19 @@ k get secret -n istio-system
 k apply -f ./manifest/tls
 ```
 
+```
+k get secret -n istio-system
+```
+
+```
+k get certificaterequests -n istio-system
+```
+
+```
+k get certificate -n istio-system
+
+```
+
 ### Step-4 : Apply istio routing
 
  ```
