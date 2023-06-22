@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: demo-product-svc-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - demo-product-svc-ig
+  #- mesh
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: httpbin.org
+        port:
+          number: 80
