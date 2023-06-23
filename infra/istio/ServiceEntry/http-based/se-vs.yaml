@@ -5,6 +5,8 @@ metadata:
 spec:
   hosts:
   - httpbin.org
+  gateways:
+  - mesh
   http:
   - fault:
       abort:
