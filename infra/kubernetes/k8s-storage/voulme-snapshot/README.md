@@ -2,9 +2,13 @@
 # https://minikube.sigs.k8s.io/docs/tutorials/volume_snapshots_and_csi/
 
 mk addons enable volumesnapshots
+
 mk addons enable csi-hostpath-driver
+
 k get sc
+
 k get volumeSnapshotClass
+
 
 
 cd manifests
