@@ -1,6 +1,17 @@
 # Enable Dynamic Provisioning on Minikube 
 # https://minikube.sigs.k8s.io/docs/tutorials/volume_snapshots_and_csi/
 
+![Alt text](./image/volume-snapshot.png?raw=true "volume-snapshot")
+
+![Alt text](./image/volume-snapshot-seq.png?raw=true "volume-snapshot")
+
+![Alt text](./image/volume-snapshot-restore.png?raw=true "volume-snapshot")
+
+![Alt text](./image/volume-snapshot-restore-visual.png?raw=true "volume-snapshot")
+
+![Alt text](./image/csi-snapshotter.png?raw=true "volume-snapshot")
+
+
 mk addons enable volumesnapshots
 
 mk addons enable csi-hostpath-driver
