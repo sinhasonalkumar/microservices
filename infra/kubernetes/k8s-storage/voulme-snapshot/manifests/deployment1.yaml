@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx1
+  name: nginx1
+  namespace: storage-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx1
+    spec:
+      containers:
+      - image: nginx
+        name: nginx1
+        volumeMounts:
+        - mountPath: /vol
+          name: csi-hostpath-demo-vol
+      volumes:
+      - name: csi-hostpath-demo-vol
+        persistentVolumeClaim:
+          claimName: csi-hostpath-demo-pvc
