@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: nginx-sts-1-se
+spec:
+  hosts:
+  - nginx-sts-1.nginx-headless-svc.default.svc.cluster.local
+  location: MESH_INTERNAL
+  ports:
+  - name: nginx
+    number: 80
+    protocol: http
+  resolution: DNS

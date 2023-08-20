@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: nginx-sts-0-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - nginx-gwr
+  #- mesh
+  http:
+  - match:
+    - uri:
+        prefix: /nginx-sts-0
+      method: 
+        exact: GET
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: nginx-sts-0.nginx-headless-svc.default.svc.cluster.local
+        port:
+          number: 80
+    retries:
+      attempts: 3
+      perTryTimeout: 2s
+      retryOn: connect-failure,refused-stream,503
