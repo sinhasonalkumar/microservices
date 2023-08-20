@@ -1,0 +1,9 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: external-service-demo-dr
+spec:
+  host: "httpbin.org"
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
