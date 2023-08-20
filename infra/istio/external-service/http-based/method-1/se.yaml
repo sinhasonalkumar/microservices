@@ -1,0 +1,14 @@
+
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: service-external-demo-se
+spec:
+  hosts:
+  - service-external-demo-svc.default.svc.cluster.local
+  location: MESH_INTERNAL
+  ports:
+  - name: service-external-demo
+    number: 80
+    protocol: http
+  resolution: DNS

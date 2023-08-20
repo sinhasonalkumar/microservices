@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: demo-product-svc-ig
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller (k get svc istio-ingressgateway -n istio-system --show-labels | grep -i "istio=")
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"

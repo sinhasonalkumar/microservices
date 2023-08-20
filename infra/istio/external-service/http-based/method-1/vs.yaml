@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: service-external-demo-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - service-external-demo-gwr
+  #- mesh
+  http:
+  - match:
+    - uri:
+        prefix: /
+      method: 
+        exact: GET
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: service-external-demo-svc.default.svc.cluster.local
+        port:
+          number: 80
+    retries:
+      attempts: 3
+      perTryTimeout: 2s
+      retryOn: connect-failure,refused-stream,503

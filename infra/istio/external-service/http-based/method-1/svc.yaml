@@ -1,0 +1,7 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: service-external-demo-svc
+spec:
+  type: ExternalName
+  externalName: httpbin.org
