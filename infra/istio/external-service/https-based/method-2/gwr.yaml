@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: external-service-demo-gwr
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller (k get svc istio-ingressgateway -n istio-system --show-labels | grep -i "istio=")
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "api.mycompany.com"
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: api-mycompany-credential
+    hosts:
+    - "api.mycompany.com"

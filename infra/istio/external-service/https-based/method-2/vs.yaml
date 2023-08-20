@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: external-service-demo-vs
+spec:
+  hosts:
+  - "api.mycompany.com"
+  gateways:
+  - external-service-demo-gwr
+  http:
+  - match:
+    - uri:
+        regex: ".*"
+    route:
+    - destination:
+        host: httpbin.org
+        port:
+          number: 443
