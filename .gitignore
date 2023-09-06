@@ -34,3 +34,9 @@ build/
 
 ### MAC DS_Store ###
 **/.DS_Store
+
+## Terraform ####
+**/.terraform
+**/tfplan
+**/terraform.tfstate
+**/terraform.tfstate.backup
