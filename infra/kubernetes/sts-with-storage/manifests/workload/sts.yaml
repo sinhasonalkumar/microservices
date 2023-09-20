@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  serviceName: nginx
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        volumeMounts:
+        - mountPath: /vol
+          name: csi-hostpath-demo-vol
+      volumes:
+      - name: csi-hostpath-demo-vol
+        persistentVolumeClaim:
+          claimName: csi-hostpath-demo-pvc
