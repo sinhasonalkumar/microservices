@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      initContainers:
+      - name: init
+        image: busybox:1.35.0
+        args: [/bin/sh, -c, 'sysctl net.ipv4.tcp_keepalive_time && sysctl -w net.ipv4.tcp_keepalive_time=60']
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: workdir
+          mountPath: "/app-configs"
+      containers:
+      - image: nginx
+        name: nginx
+      dnsConfig:
+        searches:
+          - ns1.svc.cluster-domain.example
+          - my.dns.search.suffix
+      volumes:
+      - name: workdir
+        emptyDir: {}
+
