@@ -19,13 +19,13 @@ public class Receiver {
 		return latch;
 	}
 
-	@JmsListener(destination = "${queue.name}", selector = "${receiver.selectorHighMedium}")
+	@JmsListener(destination = "${queue.name}", selector = "${receiver.selectorReceiveMethod1}")
 	public void receiveMethod1(String message, @Header("priority") String priority) {
 		LOGGER.info("******** message RECEIVED={} of {} by receiveMethod1", message, priority);
 		latch.countDown();
 	}
 
-	@JmsListener(destination = "${queue.name}", selector = "${receiver.selectorLow}")
+	@JmsListener(destination = "${queue.name}", selector = "${receiver.selectorReceiveMethod2}")
 	public void receiveMethod2(String message, @Header("priority") String priority) {
 		LOGGER.info("******** message RECEIVED={} of {} by receiveMethod2", message, priority);
 		latch.countDown();
