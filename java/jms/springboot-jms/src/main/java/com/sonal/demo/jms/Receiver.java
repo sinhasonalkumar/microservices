@@ -27,7 +27,7 @@ public class Receiver {
 
 	@JmsListener(destination = "${queue.name}", selector = "${receiver.selectorLow}")
 	public void receiveLow(String message,@Header("priority") String priority) {
-		LOGGER.info("******** received message={} of {}", message, priority);
+		LOGGER.info("******** message RECEIVED={} of {}", message, priority);
 		latch.countDown();
 	}
 }
