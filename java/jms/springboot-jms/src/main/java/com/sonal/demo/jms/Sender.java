@@ -16,7 +16,7 @@ public class Sender {
 
 	public void send(String destination, String message, Priority priority) {
 		LOGGER.info("######## message SENT={} {}", message, priority);
-		
+
 		jmsTemplate.convertAndSend(destination, message, messagePostProcessor -> {
 			messagePostProcessor.setStringProperty("priority", priority.name());
 			return messagePostProcessor;
